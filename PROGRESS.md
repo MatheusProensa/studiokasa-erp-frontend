@@ -54,7 +54,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | 3 | Medição e Conferência | 🟡 | Agenda, agendar, ficha com checklist, comparação vendido×conferido e alçada. Falta: app mobile, OCR, contrato complementar |
 | 4 | Pedido ao Fornecedor | 🟡 | Lista, criar pedido, ficha com itens, avanço de status, atraso e divergências. Falta: portal/API fornecedor, previsão IA |
 | 5 | Compras e Suprimentos | 🟡 | Cotações (comparar/escolher), sugestões por estoque mínimo, histórico de preços. Falta: XML NF-e, 3-way match, portal fornecedor |
-| 6 | Estoque e WMS | ⬜ | placeholder |
+| 6 | Estoque e WMS | 🟡 | Itens (saldo/endereço/status), movimentação→Kardex, inventário físico×sistema. Falta: código de barras/RFID, transferência entre filiais, IA demanda |
 | 7 | Financeiro | ⬜ | placeholder |
 | 8 | Fiscal e Contábil | ⬜ | placeholder |
 | 9 | Logística e Montagem | ⬜ | placeholder |
