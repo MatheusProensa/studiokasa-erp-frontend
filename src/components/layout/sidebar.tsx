@@ -18,10 +18,10 @@ export function Sidebar() {
       </div>
 
       {/* Navegação por seções */}
-      <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+      <nav className="nav-scroll flex-1 space-y-3 overflow-y-auto px-3 py-3">
         {NAV_SECTIONS.map((section) => (
-          <div key={section.title} className="space-y-1">
-            <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
+          <div key={section.title} className="space-y-0.5">
+            <p className="px-3 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
               {section.title}
             </p>
             {section.items.map((item) => (
@@ -31,7 +31,7 @@ export function Sidebar() {
                 end={item.href === '/'}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                    'flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
                     'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
                     isActive && 'bg-sidebar-accent text-sidebar-accent-foreground',
                   )
