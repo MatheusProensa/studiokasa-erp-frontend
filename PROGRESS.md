@@ -58,7 +58,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | 7 | Financeiro | 🟡 | A pagar/receber (baixar), comissões (liberar/pagar), fluxo previsto×realizado. Falta: CNAB/boleto/PIX, conciliação, DRE |
 | 8 | Fiscal e Contábil | 🟡 | Notas emitidas (impostos c/ IBS-CBS, cancelar/retransmitir), entradas (escriturar/crédito), certificado A1 + SEFAZ. Falta: emissão real, SPED, integração contábil |
 | 9 | Logística e Montagem | 🟡 | Ordens (entrega/montagem), checklist por fase, check-in/out, avarias, equipes. Falta: roteirização, app de campo, ETA |
-| 10 | Pós-venda | ⬜ | placeholder |
+| 10 | Pós-venda | 🟡 | Chamados (atender/solicitar peça/encerrar), garantias com vencimento, NPS. Falta: chatbot WhatsApp, app de campo, análise de sentimento |
 | 11 | Marketing | ⬜ | fora da sidebar atual |
 | 12 | Portal do Cliente | ⬜ | fora da sidebar atual |
 | 13 | BI e Dashboards | ⬜ | placeholder |
