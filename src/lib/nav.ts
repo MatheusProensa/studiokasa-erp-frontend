@@ -11,6 +11,9 @@ import {
   Wallet,
   FileText,
   Headset,
+  Megaphone,
+  UserCircle,
+  HeartHandshake,
   Settings,
   type LucideIcon,
 } from 'lucide-react'
@@ -44,6 +47,7 @@ export const NAV_SECTIONS: NavSection[] = [
     items: [
       { module: 1, label: 'CRM e Vendas', href: '/crm', icon: Users },
       { module: 2, label: 'Projetos', href: '/projetos', icon: FolderKanban },
+      { module: 11, label: 'Marketing', href: '/marketing', icon: Megaphone },
     ],
   },
   {
@@ -67,6 +71,8 @@ export const NAV_SECTIONS: NavSection[] = [
     title: 'Suporte',
     items: [
       { module: 10, label: 'Pós-venda', href: '/posvenda', icon: Headset },
+      { module: 12, label: 'Portal do Cliente', href: '/portal', icon: UserCircle },
+      { module: 14, label: 'RH e Pessoas', href: '/rh', icon: HeartHandshake },
       { module: 0, label: 'Administração', href: '/adm', icon: Settings },
     ],
   },
