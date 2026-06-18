@@ -56,7 +56,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | 5 | Compras e Suprimentos | 🟡 | Cotações (comparar/escolher), sugestões por estoque mínimo, histórico de preços. Falta: XML NF-e, 3-way match, portal fornecedor |
 | 6 | Estoque e WMS | 🟡 | Itens (saldo/endereço/status), movimentação→Kardex, inventário físico×sistema. Falta: código de barras/RFID, transferência entre filiais, IA demanda |
 | 7 | Financeiro | 🟡 | A pagar/receber (baixar), comissões (liberar/pagar), fluxo previsto×realizado. Falta: CNAB/boleto/PIX, conciliação, DRE |
-| 8 | Fiscal e Contábil | ⬜ | placeholder |
+| 8 | Fiscal e Contábil | 🟡 | Notas emitidas (impostos c/ IBS-CBS, cancelar/retransmitir), entradas (escriturar/crédito), certificado A1 + SEFAZ. Falta: emissão real, SPED, integração contábil |
 | 9 | Logística e Montagem | ⬜ | placeholder |
 | 10 | Pós-venda | ⬜ | placeholder |
 | 11 | Marketing | ⬜ | fora da sidebar atual |
