@@ -9,6 +9,7 @@ import CrmPage from '@/pages/crm'
 import AdmPage from '@/pages/adm'
 import ProjetosPage from '@/pages/projetos'
 import MedicaoPage from '@/pages/medicao'
+import PedidosPage from '@/pages/pedidos'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -29,7 +30,8 @@ export default function App() {
             <Route path="/adm" element={<AdmPage />} />
             <Route path="/projetos" element={<ProjetosPage />} />
             <Route path="/medicao" element={<MedicaoPage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao'].includes(i.href)).map((item) => (
+            <Route path="/pedidos" element={<PedidosPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
