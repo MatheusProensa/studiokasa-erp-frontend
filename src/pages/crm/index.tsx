@@ -1,6 +1,5 @@
-import { UserPlus, Handshake, Target, Filter, KanbanSquare, List, Contact } from 'lucide-react'
+import { UserPlus, Handshake, Target, KanbanSquare, List, Contact } from 'lucide-react'
 import { PageHeader } from '@/components/layout/page-header'
-import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { StatCard } from '@/components/patterns/stat-card'
 import { FunilKanban } from '@/features/crm/funil-kanban'
@@ -14,12 +13,6 @@ export default function CrmPage() {
         breadcrumb="Comercial · CRM e Vendas"
         title="CRM e Vendas"
         description="Funil de oportunidades, clientes e negociações."
-        actions={
-          <Button variant="outline">
-            <Filter className="size-4" />
-            Filtros
-          </Button>
-        }
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
