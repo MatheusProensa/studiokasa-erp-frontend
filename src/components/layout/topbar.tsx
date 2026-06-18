@@ -1,56 +1,61 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 import { LogOut, Search, Bell, CircleHelp, Calendar, ChevronDown, User, Settings } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { NameAvatar } from '@/components/ui/name-avatar'
 import { Separator } from '@/components/ui/separator'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAuth } from '@/features/auth/auth-context'
-import type { AccessRole } from '@/types'
+import { ROLE_LABELS } from '@/lib/roles'
+import { MobileNav } from './mobile-nav'
+import { CommandPalette } from './command-palette'
 
-const ROLE_LABEL: Record<AccessRole, string> = {
-  projetista: 'Projetista',
-  conferente: 'Conferente',
-  estoquista: 'Estoquista',
-  financeiro: 'Financeiro',
-  marketing: 'Marketing',
-  vendedor: 'Vendedor',
-  supervisor: 'Supervisor',
-  gerente: 'Gerente',
-  diretor: 'Diretor(a)',
-}
+const NOTIFICACOES = [
+  { titulo: 'Medição bloqueada por alçada', desc: 'Construtora Vega — divergência de 15%' },
+  { titulo: 'Pedido atrasado', desc: 'PC-2003 — Marcenaria Dália' },
+  { titulo: 'Título vencido', desc: 'NF 1190 — Componentes RS' },
+]
 
 function todayLabel() {
-  return new Date().toLocaleDateString('pt-BR', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  })
+  return new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' })
 }
 
 export function Topbar() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [search, setSearch] = useState(false)
 
   function handleLogout() {
     logout()
     navigate('/login')
   }
 
-  const roleLabel = user?.roles[0] ? ROLE_LABEL[user.roles[0]] : ''
+  const roleLabel = user?.roles[0] ? ROLE_LABELS[user.roles[0]] : ''
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-4 border-b bg-card px-6">
-      <div className="relative hidden max-w-md flex-1 sm:block">
-        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
-        <Input placeholder="Buscar no ERP..." className="pl-9" />
-      </div>
+    <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-card px-4 sm:px-6">
+      <MobileNav />
+
+      {/* Busca global */}
+      <button
+        onClick={() => setSearch(true)}
+        className="flex h-9 w-full max-w-md items-center gap-2 rounded-lg border bg-background px-3 text-sm text-muted-foreground transition-colors hover:bg-accent"
+      >
+        <Search className="size-4" />
+        <span className="hidden sm:inline">Buscar no ERP...</span>
+        <kbd className="ml-auto hidden rounded border bg-muted px-1.5 py-0.5 text-[10px] font-medium sm:inline">
+          Ctrl K
+        </kbd>
+      </button>
+      <CommandPalette open={search} onOpenChange={setSearch} />
 
       <div className="ml-auto flex items-center gap-1.5">
         <span className="mr-1 hidden items-center gap-1.5 text-sm text-muted-foreground lg:flex">
@@ -59,13 +64,29 @@ export function Topbar() {
         </span>
         <Separator orientation="vertical" className="mx-1 hidden h-6 lg:block" />
 
-        <Button variant="ghost" size="icon" aria-label="Ajuda">
+        <Button variant="ghost" size="icon" aria-label="Ajuda" onClick={() => toast('Central de ajuda em breve.')}>
           <CircleHelp className="size-5" />
         </Button>
-        <Button variant="ghost" size="icon" aria-label="Notificações" className="relative">
-          <Bell className="size-5" />
-          <span className="absolute right-2 top-2 size-2 rounded-full bg-[var(--status-danger)] ring-2 ring-card" />
-        </Button>
+
+        {/* Notificações */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" aria-label="Notificações" className="relative">
+              <Bell className="size-5" />
+              <span className="absolute right-2 top-2 size-2 rounded-full bg-[var(--status-danger)] ring-2 ring-card" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-80">
+            <DropdownMenuLabel>Notificações</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {NOTIFICACOES.map((n) => (
+              <DropdownMenuItem key={n.titulo} className="flex flex-col items-start gap-0.5">
+                <span className="text-sm font-medium">{n.titulo}</span>
+                <span className="text-xs text-muted-foreground">{n.desc}</span>
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Separator orientation="vertical" className="mx-1 h-6" />
 
@@ -89,11 +110,11 @@ export function Topbar() {
               </div>
             </div>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/rh')}>
               <User className="mr-2 size-4" />
               Meu perfil
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/adm')}>
               <Settings className="mr-2 size-4" />
               Configurações
             </DropdownMenuItem>

@@ -20,8 +20,6 @@ import MarketingPage from '@/pages/marketing'
 import BiPage from '@/pages/bi'
 import PortalPage from '@/pages/portal'
 import RhPage from '@/pages/rh'
-import ModulePlaceholder from '@/pages/module-placeholder'
-import { NAV_ITEMS } from '@/lib/nav'
 
 export default function App() {
   return (
@@ -51,13 +49,6 @@ export default function App() {
             <Route path="/bi" element={<BiPage />} />
             <Route path="/portal" element={<PortalPage />} />
             <Route path="/rh" element={<RhPage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro', '/fiscal', '/logistica', '/posvenda', '/marketing', '/bi', '/portal', '/rh'].includes(i.href)).map((item) => (
-              <Route
-                key={item.href}
-                path={item.href}
-                element={<ModulePlaceholder module={item.module} title={item.label} />}
-              />
-            ))}
           </Route>
         </Routes>
       </BrowserRouter>

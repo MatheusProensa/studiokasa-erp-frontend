@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { TrendingUp, FolderKanban, Package, Wallet, CalendarCheck, Truck, PenTool, Wrench } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { PageHeader } from '@/components/layout/page-header'
@@ -18,6 +19,7 @@ const AGENDA_ICONS: Record<string, LucideIcon> = {
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  const navigate = useNavigate()
   const firstName = user?.name.split(' ')[0] ?? ''
 
   return (
@@ -43,7 +45,7 @@ export default function DashboardPage() {
               <CardTitle>Projetos recentes</CardTitle>
               <CardDescription>Pipeline de produção e entrega</CardDescription>
             </div>
-            <Button size="sm" variant="outline">
+            <Button size="sm" variant="outline" onClick={() => navigate('/projetos')}>
               Ver todos
             </Button>
           </CardHeader>
