@@ -14,6 +14,7 @@ import ComprasPage from '@/pages/compras'
 import EstoquePage from '@/pages/estoque'
 import FinanceiroPage from '@/pages/financeiro'
 import FiscalPage from '@/pages/fiscal'
+import LogisticaPage from '@/pages/logistica'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -39,7 +40,8 @@ export default function App() {
             <Route path="/estoque" element={<EstoquePage />} />
             <Route path="/financeiro" element={<FinanceiroPage />} />
             <Route path="/fiscal" element={<FiscalPage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro', '/fiscal'].includes(i.href)).map((item) => (
+            <Route path="/logistica" element={<LogisticaPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro', '/fiscal', '/logistica'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
