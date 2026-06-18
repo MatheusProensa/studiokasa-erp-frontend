@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { LogOut, Search, Bell, CircleHelp, Calendar, ChevronDown, User, Settings } from 'lucide-react'
+import { LogOut, Search, Bell, CircleHelp, Calendar, ChevronDown, User, Settings, UserCog } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { NameAvatar } from '@/components/ui/name-avatar'
 import { Separator } from '@/components/ui/separator'
@@ -11,10 +11,14 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAuth } from '@/features/auth/auth-context'
-import { ROLE_LABELS } from '@/lib/roles'
+import { ROLE_LABELS, ROLE_OPTIONS } from '@/lib/roles'
+import type { AccessRole } from '@/types'
 import { MobileNav } from './mobile-nav'
 import { CommandPalette } from './command-palette'
 
@@ -29,13 +33,18 @@ function todayLabel() {
 }
 
 export function Topbar() {
-  const { user, logout } = useAuth()
+  const { user, logout, setRoles } = useAuth()
   const navigate = useNavigate()
   const [search, setSearch] = useState(false)
 
   function handleLogout() {
     logout()
     navigate('/login')
+  }
+
+  function verComo(role: AccessRole) {
+    setRoles([role])
+    navigate('/') // volta ao início pra não cair numa tela sem permissão
   }
 
   const roleLabel = user?.roles[0] ? ROLE_LABELS[user.roles[0]] : ''
@@ -118,6 +127,23 @@ export function Topbar() {
               <Settings className="mr-2 size-4" />
               Configurações
             </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <UserCog className="mr-2 size-4" />
+                Ver como (perfil)
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                {ROLE_OPTIONS.map((r) => (
+                  <DropdownMenuItem
+                    key={r.value}
+                    onClick={() => verComo(r.value)}
+                    className={user?.roles[0] === r.value ? 'bg-accent' : undefined}
+                  >
+                    {r.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-destructive">
               <LogOut className="mr-2 size-4" />

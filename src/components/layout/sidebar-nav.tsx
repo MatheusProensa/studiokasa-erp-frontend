@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { NAV_SECTIONS } from '@/lib/nav'
 import { cn } from '@/lib/utils'
+import { canAccess } from '@/lib/access'
+import { useAuth } from '@/features/auth/auth-context'
 import monogram from '@/assets/brand/logo-monogram-white.png'
 
 interface SidebarNavProps {
@@ -10,6 +12,13 @@ interface SidebarNavProps {
 
 /** Conteúdo da navegação — reutilizado na sidebar (desktop) e no menu mobile. */
 export function SidebarNav({ onNavigate }: SidebarNavProps) {
+  const { user } = useAuth()
+  // Mantém só as seções/itens que o perfil atual pode acessar.
+  const sections = NAV_SECTIONS.map((s) => ({
+    ...s,
+    items: s.items.filter((i) => canAccess(user, i.href)),
+  })).filter((s) => s.items.length > 0)
+
   return (
     <div className="flex h-full flex-col bg-gradient-to-b from-[#0d2150] via-[#0c1d44] to-[#081530] text-sidebar-foreground">
       {/* Marca */}
@@ -25,7 +34,7 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
 
       {/* Navegação por seções */}
       <nav className="nav-scroll flex-1 space-y-3 overflow-y-auto px-3 py-3">
-        {NAV_SECTIONS.map((section) => (
+        {sections.map((section) => (
           <div key={section.title} className="space-y-0.5">
             <p className="px-3 pb-0.5 text-[10px] font-semibold uppercase tracking-wider text-sidebar-foreground/40">
               {section.title}

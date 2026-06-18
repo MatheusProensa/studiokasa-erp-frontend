@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
-import type { User } from '@/types'
+import type { AccessRole, User } from '@/types'
 
 /**
  * Contexto de autenticação para rodar o frontend STANDALONE (mock).
@@ -11,6 +11,8 @@ interface AuthContextValue {
   user: User | null
   login: (email: string) => void
   logout: () => void
+  /** Troca o papel do usuário (demo de perfis — mock). */
+  setRoles: (roles: AccessRole[]) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -32,6 +34,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       user,
       login: (email: string) => setUser({ ...MOCK_USER, email }),
       logout: () => setUser(null),
+      setRoles: (roles: AccessRole[]) =>
+        setUser((prev) => (prev ? { ...prev, roles } : prev)),
     }),
     [user],
   )
