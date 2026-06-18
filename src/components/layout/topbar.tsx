@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { toast } from 'sonner'
 import { LogOut, Search, Bell, CircleHelp, Calendar, ChevronDown, User, Settings, UserCog } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { NameAvatar } from '@/components/ui/name-avatar'
@@ -21,6 +20,7 @@ import { ROLE_LABELS, ROLE_OPTIONS } from '@/lib/roles'
 import type { AccessRole } from '@/types'
 import { MobileNav } from './mobile-nav'
 import { CommandPalette } from './command-palette'
+import { HelpDrawer } from './help-drawer'
 
 const NOTIFICACOES = [
   { titulo: 'Medição bloqueada por alçada', desc: 'Construtora Vega — divergência de 15%' },
@@ -36,6 +36,7 @@ export function Topbar() {
   const { user, logout, setRoles } = useAuth()
   const navigate = useNavigate()
   const [search, setSearch] = useState(false)
+  const [help, setHelp] = useState(false)
 
   function handleLogout() {
     logout()
@@ -73,9 +74,10 @@ export function Topbar() {
         </span>
         <Separator orientation="vertical" className="mx-1 hidden h-6 lg:block" />
 
-        <Button variant="ghost" size="icon" aria-label="Ajuda" onClick={() => toast('Central de ajuda em breve.')}>
+        <Button variant="ghost" size="icon" aria-label="Como usar esta tela" onClick={() => setHelp(true)}>
           <CircleHelp className="size-5" />
         </Button>
+        <HelpDrawer open={help} onOpenChange={setHelp} />
 
         {/* Notificações */}
         <DropdownMenu>
