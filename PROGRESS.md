@@ -48,7 +48,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 |---|--------|--------|------------|
 | — | Login | ✅ | Mock; com a marca e lista de recursos |
 | — | Dashboard | ✅ | KPIs, projetos recentes, agenda (dados mock) |
-| 0 | Administração | 🟡 | Usuários e Perfis (CRUD completo); Permissões/Fiscal/Desconto pendentes |
+| 0 | Administração | ✅ | Usuários (CRUD), Permissões (matriz RBAC), Parâmetros fiscais, Política de desconto |
 | 1 | CRM e Vendas | 🟡 | Funil Kanban (mover etapa), Clientes (CRUD), Oportunidades. Falta: propostas/contratos, ranking, WhatsApp, assinatura |
 | 2 | Projetos | 🟡 | Quadro Kanban por etapa, lista (CRUD), ficha com versões e peças. Falta: integração 3D, chat, biblioteca |
 | 3 | Medição e Conferência | 🟡 | Agenda, agendar, ficha com checklist, comparação vendido×conferido e alçada. Falta: app mobile, OCR, contrato complementar |
