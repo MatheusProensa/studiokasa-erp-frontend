@@ -12,6 +12,7 @@ import MedicaoPage from '@/pages/medicao'
 import PedidosPage from '@/pages/pedidos'
 import ComprasPage from '@/pages/compras'
 import EstoquePage from '@/pages/estoque'
+import FinanceiroPage from '@/pages/financeiro'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -35,7 +36,8 @@ export default function App() {
             <Route path="/pedidos" element={<PedidosPage />} />
             <Route path="/compras" element={<ComprasPage />} />
             <Route path="/estoque" element={<EstoquePage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque'].includes(i.href)).map((item) => (
+            <Route path="/financeiro" element={<FinanceiroPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
