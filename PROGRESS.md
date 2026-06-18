@@ -49,7 +49,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | — | Login | ✅ | Mock; com a marca e lista de recursos |
 | — | Dashboard | ✅ | KPIs, projetos recentes, agenda (dados mock) |
 | 0 | Administração | 🟡 | Usuários e Perfis (CRUD completo); Permissões/Fiscal/Desconto pendentes |
-| 1 | CRM e Vendas | 🟡 | Tela-modelo com KPIs + tabela de oportunidades (mock) |
+| 1 | CRM e Vendas | 🟡 | Funil Kanban (mover etapa), Clientes (CRUD), Oportunidades. Falta: propostas/contratos, ranking, WhatsApp, assinatura |
 | 2 | Projetos | ⬜ | placeholder |
 | 3 | Medição e Conferência | ⬜ | placeholder |
 | 4 | Pedido ao Fornecedor | ⬜ | placeholder |

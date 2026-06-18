@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 
 const MOCK_USER: User = {
   id: 1,
-  name: 'Matheus Proença',
+  name: 'Matheus Proensa',
   email: 'matheu.proensa@gmail.com',
   avatarUrl: null,
   roles: ['diretor'],
