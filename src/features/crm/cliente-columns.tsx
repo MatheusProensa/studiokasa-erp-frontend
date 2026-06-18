@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { MoreHorizontal, Pencil, Trash2, FolderKanban } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { NameAvatar } from '@/components/ui/name-avatar'
@@ -14,9 +14,10 @@ import type { Cliente } from './types'
 interface ColumnActions {
   onEdit: (c: Cliente) => void
   onDelete: (c: Cliente) => void
+  onVerProjetos: (c: Cliente) => void
 }
 
-export function buildClienteColumns({ onEdit, onDelete }: ColumnActions): ColumnDef<Cliente>[] {
+export function buildClienteColumns({ onEdit, onDelete, onVerProjetos }: ColumnActions): ColumnDef<Cliente>[] {
   return [
     {
       accessorKey: 'nome',
@@ -65,6 +66,10 @@ export function buildClienteColumns({ onEdit, onDelete }: ColumnActions): Column
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => onVerProjetos(row.original)}>
+                <FolderKanban className="mr-2 size-4" />
+                Ver projetos
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onEdit(row.original)}>
                 <Pencil className="mr-2 size-4" />
                 Editar

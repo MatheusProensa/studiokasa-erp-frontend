@@ -13,7 +13,12 @@ export interface ProjetoFormValues {
 }
 
 interface ProjetosContextValue {
+  /** Lista completa (KPIs). */
   projetos: Projeto[]
+  /** Lista aplicando o filtro por cliente (visões/tabela/kanban). */
+  projetosVisiveis: Projeto[]
+  filtroCliente: string | null
+  setFiltroCliente: (nome: string | null) => void
   moverEtapa: (id: number, etapa: EtapaKey) => void
   aprovar: (id: number) => void
   salvar: (values: ProjetoFormValues, id?: number) => void
@@ -24,12 +29,18 @@ const ProjetosContext = createContext<ProjetosContextValue | null>(null)
 
 export function ProjetosProvider({ children }: { children: ReactNode }) {
   const [projetos, setProjetos] = useState<Projeto[]>(PROJETOS)
+  const [filtroCliente, setFiltroCliente] = useState<string | null>(null)
 
   const value = useMemo<ProjetosContextValue>(() => {
     const nowIso = () => new Date().toISOString()
 
     return {
       projetos,
+      projetosVisiveis: filtroCliente
+        ? projetos.filter((p) => p.cliente === filtroCliente)
+        : projetos,
+      filtroCliente,
+      setFiltroCliente,
       moverEtapa: (id, etapa) =>
         setProjetos((prev) =>
           prev.map((p) => (p.id === id ? { ...p, etapa, atualizadoEm: nowIso() } : p)),
@@ -63,7 +74,7 @@ export function ProjetosProvider({ children }: { children: ReactNode }) {
         }),
       remover: (id) => setProjetos((prev) => prev.filter((p) => p.id !== id)),
     }
-  }, [projetos])
+  }, [projetos, filtroCliente])
 
   return <ProjetosContext.Provider value={value}>{children}</ProjetosContext.Provider>
 }

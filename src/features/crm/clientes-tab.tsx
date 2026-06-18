@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -20,6 +21,7 @@ import type { Cliente } from './types'
 import type { ClienteFormValues } from './cliente-schema'
 
 export function ClientesTab() {
+  const navigate = useNavigate()
   const [clientes, setClientes] = useState<Cliente[]>(CLIENTES)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Cliente | null>(null)
@@ -54,8 +56,13 @@ export function ClientesTab() {
   }
 
   const columns = useMemo(
-    () => buildClienteColumns({ onEdit: handleEdit, onDelete: setDeleting }),
-    [],
+    () =>
+      buildClienteColumns({
+        onEdit: handleEdit,
+        onDelete: setDeleting,
+        onVerProjetos: (c) => navigate(`/projetos?cliente=${encodeURIComponent(c.nome)}`),
+      }),
+    [navigate],
   )
 
   return (

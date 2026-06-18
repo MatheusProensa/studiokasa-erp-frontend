@@ -92,7 +92,7 @@ function Column({
 }
 
 export function ProjetosKanban() {
-  const { projetos, moverEtapa } = useProjetos()
+  const { projetosVisiveis: projetos, moverEtapa } = useProjetos()
   const [detail, setDetail] = useState<Projeto | null>(null)
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 

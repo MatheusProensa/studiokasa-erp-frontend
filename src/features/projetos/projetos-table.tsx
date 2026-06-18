@@ -31,7 +31,7 @@ import { ProjetoFormDialog } from './projeto-form-dialog'
 import type { Projeto } from './types'
 
 export function ProjetosTable() {
-  const { projetos, remover } = useProjetos()
+  const { projetosVisiveis: projetos, remover } = useProjetos()
   const [detail, setDetail] = useState<Projeto | null>(null)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Projeto | null>(null)
