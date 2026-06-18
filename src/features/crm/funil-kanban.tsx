@@ -8,13 +8,21 @@ import {
   useDroppable,
   type DragEndEvent,
 } from '@dnd-kit/core'
-import { GripVertical } from 'lucide-react'
+import { GripVertical, Move } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { NameAvatar } from '@/components/ui/name-avatar'
 import { cn } from '@/lib/utils'
 import { formatBRL } from '@/lib/format'
 import { STAGES, SCORE_META, type StageKey } from './constants'
+
+const DOT: Record<string, string> = {
+  info: 'var(--status-info)',
+  success: 'var(--status-success)',
+  warning: 'var(--status-warning)',
+  danger: 'var(--status-danger)',
+  neutral: 'var(--status-neutral)',
+}
 import { DEALS } from './mock-data'
 import type { Deal } from './types'
 
@@ -58,12 +66,12 @@ function Column({ stage, deals }: { stage: (typeof STAGES)[number]; deals: Deal[
   const total = deals.reduce((s, d) => s + d.valor, 0)
   return (
     <div className="flex w-72 shrink-0 flex-col">
-      <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <StatusBadge tone={stage.tone}>{stage.label}</StatusBadge>
-          <span className="text-xs font-medium text-muted-foreground">{deals.length}</span>
-        </div>
-        <span className="text-xs font-semibold tabular-nums text-muted-foreground">{formatBRL(total)}</span>
+      <div className="mb-3 flex items-center gap-2">
+        <span className="size-2.5 rounded-full" style={{ backgroundColor: DOT[stage.tone] }} />
+        <span className="text-sm font-semibold">{stage.label}</span>
+        <span className="ml-auto text-xs text-muted-foreground">
+          {deals.length} · {formatBRL(total)}
+        </span>
       </div>
       <div
         ref={setNodeRef}
@@ -76,6 +84,9 @@ function Column({ stage, deals }: { stage: (typeof STAGES)[number]; deals: Deal[
         {deals.map((deal) => (
           <DealCard key={deal.id} deal={deal} />
         ))}
+        <button className="mt-1 rounded-lg border border-dashed py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground">
+          + Novo lead
+        </button>
       </div>
     </div>
   )
@@ -98,6 +109,9 @@ export function FunilKanban() {
           <Column key={stage.key} stage={stage} deals={deals.filter((d) => d.etapa === stage.key)} />
         ))}
       </div>
+      <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+        <Move className="size-3.5" /> Arraste os cards para mover entre as etapas do funil
+      </p>
     </DndContext>
   )
 }

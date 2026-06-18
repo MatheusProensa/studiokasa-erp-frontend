@@ -8,13 +8,21 @@ import {
   useDroppable,
   type DragEndEvent,
 } from '@dnd-kit/core'
-import { GripVertical } from 'lucide-react'
+import { GripVertical, Move } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { NameAvatar } from '@/components/ui/name-avatar'
 import { cn } from '@/lib/utils'
 import { formatBRL } from '@/lib/format'
 import { ETAPAS, type EtapaKey } from './constants'
+
+const DOT: Record<string, string> = {
+  info: 'var(--status-info)',
+  success: 'var(--status-success)',
+  warning: 'var(--status-warning)',
+  danger: 'var(--status-danger)',
+  neutral: 'var(--status-neutral)',
+}
 import { useProjetos } from './projetos-context'
 import { ProjetoDetailSheet } from './projeto-detail-sheet'
 import type { Projeto } from './types'
@@ -68,12 +76,12 @@ function Column({
   const total = projetos.reduce((s, p) => s + p.valor, 0)
   return (
     <div className="flex w-72 shrink-0 flex-col">
-      <div className="mb-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <StatusBadge tone={etapa.tone}>{etapa.label}</StatusBadge>
-          <span className="text-xs font-medium text-muted-foreground">{projetos.length}</span>
-        </div>
-        <span className="text-xs font-semibold tabular-nums text-muted-foreground">{formatBRL(total)}</span>
+      <div className="mb-3 flex items-center gap-2">
+        <span className="size-2.5 rounded-full" style={{ backgroundColor: DOT[etapa.tone] }} />
+        <span className="text-sm font-semibold">{etapa.label}</span>
+        <span className="ml-auto text-xs text-muted-foreground">
+          {projetos.length} · {formatBRL(total)}
+        </span>
       </div>
       <div
         ref={setNodeRef}
@@ -115,6 +123,9 @@ export function ProjetosKanban() {
             />
           ))}
         </div>
+        <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+          <Move className="size-3.5" /> Arraste os cards para mover entre as etapas
+        </p>
       </DndContext>
       <ProjetoDetailSheet projeto={detail} onOpenChange={(o) => !o && setDetail(null)} />
     </>

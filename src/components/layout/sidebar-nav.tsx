@@ -11,7 +11,7 @@ interface SidebarNavProps {
 /** Conteúdo da navegação — reutilizado na sidebar (desktop) e no menu mobile. */
 export function SidebarNav({ onNavigate }: SidebarNavProps) {
   return (
-    <div className="flex h-full flex-col bg-sidebar text-sidebar-foreground">
+    <div className="flex h-full flex-col bg-gradient-to-b from-[#0d2150] via-[#0c1d44] to-[#081530] text-sidebar-foreground">
       {/* Marca */}
       <div className="flex h-16 items-center gap-3 px-5">
         <span className="flex size-9 items-center justify-center rounded-xl bg-sidebar-accent p-1.5">
@@ -39,8 +39,9 @@ export function SidebarNav({ onNavigate }: SidebarNavProps) {
                 className={({ isActive }) =>
                   cn(
                     'relative flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
-                    'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                    isActive && 'bg-sidebar-accent text-sidebar-accent-foreground',
+                    'text-sidebar-foreground/75 hover:bg-white/5 hover:text-sidebar-foreground',
+                    isActive &&
+                      'bg-gradient-to-r from-[#1e4d8c] to-[#1a3f74] text-white shadow-sm hover:text-white',
                   )
                 }
               >
