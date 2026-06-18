@@ -17,6 +17,7 @@ import FiscalPage from '@/pages/fiscal'
 import LogisticaPage from '@/pages/logistica'
 import PosvendaPage from '@/pages/posvenda'
 import MarketingPage from '@/pages/marketing'
+import BiPage from '@/pages/bi'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -45,7 +46,8 @@ export default function App() {
             <Route path="/logistica" element={<LogisticaPage />} />
             <Route path="/posvenda" element={<PosvendaPage />} />
             <Route path="/marketing" element={<MarketingPage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro', '/fiscal', '/logistica', '/posvenda', '/marketing'].includes(i.href)).map((item) => (
+            <Route path="/bi" element={<BiPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos', '/medicao', '/pedidos', '/compras', '/estoque', '/financeiro', '/fiscal', '/logistica', '/posvenda', '/marketing', '/bi'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
