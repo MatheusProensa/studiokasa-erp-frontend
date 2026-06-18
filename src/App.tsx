@@ -7,6 +7,7 @@ import LoginPage from '@/pages/auth/login'
 import DashboardPage from '@/pages/dashboard'
 import CrmPage from '@/pages/crm'
 import AdmPage from '@/pages/adm'
+import ProjetosPage from '@/pages/projetos'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -25,7 +26,8 @@ export default function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/crm" element={<CrmPage />} />
             <Route path="/adm" element={<AdmPage />} />
-            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm'].includes(i.href)).map((item) => (
+            <Route path="/projetos" element={<ProjetosPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm', '/projetos'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
