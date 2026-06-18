@@ -51,7 +51,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | 0 | Administração | 🟡 | Usuários e Perfis (CRUD completo); Permissões/Fiscal/Desconto pendentes |
 | 1 | CRM e Vendas | 🟡 | Funil Kanban (mover etapa), Clientes (CRUD), Oportunidades. Falta: propostas/contratos, ranking, WhatsApp, assinatura |
 | 2 | Projetos | 🟡 | Quadro Kanban por etapa, lista (CRUD), ficha com versões e peças. Falta: integração 3D, chat, biblioteca |
-| 3 | Medição e Conferência | ⬜ | placeholder |
+| 3 | Medição e Conferência | 🟡 | Agenda, agendar, ficha com checklist, comparação vendido×conferido e alçada. Falta: app mobile, OCR, contrato complementar |
 | 4 | Pedido ao Fornecedor | ⬜ | placeholder |
 | 5 | Compras e Suprimentos | ⬜ | placeholder |
 | 6 | Estoque e WMS | ⬜ | placeholder |
