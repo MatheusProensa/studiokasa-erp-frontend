@@ -60,7 +60,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 | 9 | Logística e Montagem | 🟡 | Ordens (entrega/montagem), checklist por fase, check-in/out, avarias, equipes. Falta: roteirização, app de campo, ETA |
 | 10 | Pós-venda | 🟡 | Chamados (atender/solicitar peça/encerrar), garantias com vencimento, NPS. Falta: chatbot WhatsApp, app de campo, análise de sentimento |
 | 11 | Marketing | 🟡 | Campanhas (CAC), leads com LGPD opt-in e envio ao CRM. Falta: landing pages, automação e-mail/WhatsApp, integração Meta/Google |
-| 12 | Portal do Cliente | ⬜ | fora da sidebar atual |
+| 12 | Portal do Cliente | 🟡 | Jornada do projeto, confirmar agendas, aprovar etapas, documentos, chat, assistência. Falta: auth do cliente, chat real, assinatura |
 | 13 | BI e Dashboards | 🟡 | KPIs, vendas/mês, terceirização (OTIF), ranking, curva ABC. Falta: BI conversacional, integração Power BI/Metabase |
 | 14 | RH e Pessoas | ⬜ | fora da sidebar atual |
 
