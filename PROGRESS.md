@@ -34,11 +34,11 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 - ✅ StatCard (KPI com variação)
 - ✅ NameAvatar (avatar de iniciais)
 - ✅ PageHeader (com breadcrumb)
-- ⬜ **DataTable** (TanStack) — base de todos os CRUDs
-- ⬜ Dialog / Sheet / AlertDialog (modais de criar/editar)
-- ⬜ Select / Combobox / Command (busca de cliente/produto)
-- ⬜ Form (react-hook-form + zod) + campos com máscara
-- ⬜ DatePicker, Checkbox, Switch, Textarea, Tabs, Skeleton
+- ✅ **DataTable** (TanStack) — busca, ordenação, paginação, estado vazio
+- ✅ Dialog / Sheet / AlertDialog (modais de criar/editar/confirmar)
+- ✅ Form (react-hook-form + zod) + Select, Checkbox, Switch, Tabs
+- ⬜ Combobox / Command (busca de cliente/produto)
+- ⬜ DatePicker, Textarea, máscaras (moeda/CPF/CNPJ/telefone), Skeleton
 
 ---
 
@@ -48,7 +48,7 @@ Legenda: ✅ feito · 🟡 parcial · ⬜ pendente
 |---|--------|--------|------------|
 | — | Login | ✅ | Mock; com a marca e lista de recursos |
 | — | Dashboard | ✅ | KPIs, projetos recentes, agenda (dados mock) |
-| 0 | Administração | ⬜ | — |
+| 0 | Administração | 🟡 | Usuários e Perfis (CRUD completo); Permissões/Fiscal/Desconto pendentes |
 | 1 | CRM e Vendas | 🟡 | Tela-modelo com KPIs + tabela de oportunidades (mock) |
 | 2 | Projetos | ⬜ | placeholder |
 | 3 | Medição e Conferência | ⬜ | placeholder |

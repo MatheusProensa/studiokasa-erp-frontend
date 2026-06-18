@@ -6,6 +6,7 @@ import { AuthLayout } from '@/layouts/auth-layout'
 import LoginPage from '@/pages/auth/login'
 import DashboardPage from '@/pages/dashboard'
 import CrmPage from '@/pages/crm'
+import AdmPage from '@/pages/adm'
 import ModulePlaceholder from '@/pages/module-placeholder'
 import { NAV_ITEMS } from '@/lib/nav'
 
@@ -23,7 +24,8 @@ export default function App() {
           <Route element={<AppLayout />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/crm" element={<CrmPage />} />
-            {NAV_ITEMS.filter((i) => i.href !== '/' && i.href !== '/crm').map((item) => (
+            <Route path="/adm" element={<AdmPage />} />
+            {NAV_ITEMS.filter((i) => !['/', '/crm', '/adm'].includes(i.href)).map((item) => (
               <Route
                 key={item.href}
                 path={item.href}
