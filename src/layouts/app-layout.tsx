@@ -37,8 +37,10 @@ export function AppLayout() {
       <Sidebar />
       <div className="flex flex-1 flex-col overflow-hidden">
         <Topbar />
-        <main className="flex-1 overflow-y-auto bg-muted/40 p-6">
-          {liberado ? <Outlet /> : <AcessoNegado />}
+        <main className="flex-1 overflow-y-auto bg-[var(--muted)]/60 p-4 sm:p-6 lg:px-8 lg:py-7">
+          <div className="mx-auto w-full max-w-[1400px]">
+            {liberado ? <Outlet /> : <AcessoNegado />}
+          </div>
         </main>
       </div>
     </div>
