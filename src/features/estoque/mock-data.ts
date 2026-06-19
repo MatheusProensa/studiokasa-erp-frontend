@@ -11,10 +11,11 @@ export const ITENS: EstoqueItem[] = [
 ]
 
 export const MOVIMENTOS: Movimento[] = [
-  { id: 1, data: '2026-06-16T10:20:00', tipo: 'entrada', sku: 'AC-PUX12', item: 'Puxador perfil 1,2m', qtd: 100, ref: 'PC-2001' },
-  { id: 2, data: '2026-06-16T14:05:00', tipo: 'saida', sku: 'AC-DB01', item: 'Dobradiça curva', qtd: 24, ref: 'OS-1009' },
-  { id: 3, data: '2026-06-15T09:40:00', tipo: 'entrada', sku: 'PA-DOR44', item: 'Dormitório Rafael Nunes (kit)', qtd: 1, ref: 'PC-2001' },
-  { id: 4, data: '2026-06-14T16:30:00', tipo: 'transferencia', sku: 'AC-PUX12', item: 'Puxador perfil 1,2m', qtd: 40, ref: 'Matriz → CD' },
+  { id: 1, data: '2026-06-16T10:20:00', tipo: 'entrada', sku: 'AC-PUX12', item: 'Puxador perfil 1,2m', qtd: 100, ref: 'PC-2001', saldoAntes: 40, saldoDepois: 140, responsavel: 'André Lima' },
+  { id: 2, data: '2026-06-16T14:05:00', tipo: 'saida', sku: 'AC-DB01', item: 'Dobradiça curva', qtd: 24, ref: 'OS-1009', saldoAntes: 54, saldoDepois: 30, responsavel: 'André Lima' },
+  { id: 3, data: '2026-06-15T09:40:00', tipo: 'entrada', sku: 'PA-DOR44', item: 'Dormitório Rafael Nunes (kit)', qtd: 1, ref: 'PC-2001', saldoAntes: 0, saldoDepois: 1, responsavel: 'Helena Castro' },
+  { id: 4, data: '2026-06-14T16:30:00', tipo: 'transferencia', sku: 'AC-PUX12', item: 'Puxador perfil 1,2m', qtd: 40, ref: 'Matriz → CD', saldoAntes: 80, saldoDepois: 40, responsavel: 'André Lima' },
+  { id: 5, data: '2026-06-13T11:00:00', tipo: 'ajuste', sku: 'AC-PF440', item: 'Parafuso 4x40 (cento)', qtd: 5, ref: 'Inventário', saldoAntes: 7, saldoDepois: 5, responsavel: 'André Lima' },
 ]
 
 export const INVENTARIO: InventarioLinha[] = [

@@ -32,14 +32,15 @@ import { useEstoque } from './estoque-context'
 
 const schema = z.object({
   sku: z.string().min(1, 'Selecione o item.'),
-  tipo: z.enum(['entrada', 'saida', 'transferencia']),
-  qtd: z.number().min(1, 'Quantidade mínima 1.'),
+  tipo: z.enum(['entrada', 'saida', 'transferencia', 'ajuste']),
+  qtd: z.number().min(0, 'Quantidade inválida.'),
   ref: z.string().optional(),
+  responsavel: z.string().optional(),
 })
 
 type Values = z.infer<typeof schema>
 
-const EMPTY: Values = { sku: '', tipo: 'entrada', qtd: 1, ref: '' }
+const EMPTY: Values = { sku: '', tipo: 'entrada', qtd: 1, ref: '', responsavel: '' }
 
 export function MovimentoDialog({
   open,
@@ -113,6 +114,7 @@ export function MovimentoDialog({
                         <SelectItem value="entrada">Entrada</SelectItem>
                         <SelectItem value="saida">Saída</SelectItem>
                         <SelectItem value="transferencia">Transferência</SelectItem>
+                        <SelectItem value="ajuste">Ajuste (inventário)</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -124,11 +126,11 @@ export function MovimentoDialog({
                 name="qtd"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Quantidade</FormLabel>
+                    <FormLabel>{form.watch('tipo') === 'ajuste' ? 'Novo saldo' : 'Quantidade'}</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
-                        min={1}
+                        min={0}
                         value={field.value}
                         onChange={(e) => field.onChange(e.target.valueAsNumber || 0)}
                       />
@@ -139,19 +141,34 @@ export function MovimentoDialog({
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="ref"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Referência (opcional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Ex: PC-2002, OS-1009" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="ref"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Referência</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Ex: PC-2002, OS-1009" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="responsavel"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Responsável</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Quem registrou" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

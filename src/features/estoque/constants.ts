@@ -17,11 +17,12 @@ export const CATEGORIA_LABEL: Record<Categoria, string> = {
 }
 
 /** Tipo de movimentação do Kardex. */
-export type MovTipo = 'entrada' | 'saida' | 'transferencia'
+export type MovTipo = 'entrada' | 'saida' | 'transferencia' | 'ajuste'
 export const MOV_META: Record<MovTipo, { label: string; tone: StatusTone }> = {
   entrada: { label: 'Entrada', tone: 'success' },
   saida: { label: 'Saída', tone: 'danger' },
   transferencia: { label: 'Transferência', tone: 'info' },
+  ajuste: { label: 'Ajuste', tone: 'warning' },
 }
 
 export const FILIAIS = ['Matriz', 'CD Logística', 'Loja Centro', 'Loja Norte', 'Loja Sul']

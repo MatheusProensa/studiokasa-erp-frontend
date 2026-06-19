@@ -21,6 +21,9 @@ export interface Movimento {
   item: string
   qtd: number
   ref: string // origem/documento (ex: PC-2002, OS-1009)
+  saldoAntes: number
+  saldoDepois: number
+  responsavel: string
 }
 
 export interface InventarioLinha {

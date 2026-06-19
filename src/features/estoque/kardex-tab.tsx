@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { ArrowDownToLine, ArrowUpFromLine, ArrowLeftRight } from 'lucide-react'
+import { ArrowDownToLine, ArrowUpFromLine, ArrowLeftRight, SlidersHorizontal, ArrowRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
+import { NameAvatar } from '@/components/ui/name-avatar'
 import { DataTable } from '@/components/data-table/data-table'
 import { formatDateTime } from '@/lib/format'
 import { MOV_META, type MovTipo } from './constants'
@@ -13,6 +14,7 @@ const ICON: Record<MovTipo, typeof ArrowDownToLine> = {
   entrada: ArrowDownToLine,
   saida: ArrowUpFromLine,
   transferencia: ArrowLeftRight,
+  ajuste: SlidersHorizontal,
 }
 
 export function KardexTab() {
@@ -56,6 +58,27 @@ export function KardexTab() {
           const sinal = row.original.tipo === 'saida' ? '−' : row.original.tipo === 'entrada' ? '+' : ''
           return <span className="tabular-nums font-medium">{sinal}{row.original.qtd}</span>
         },
+      },
+      {
+        id: 'saldo',
+        header: 'Saldo',
+        cell: ({ row }) => (
+          <span className="flex items-center gap-1 whitespace-nowrap tabular-nums text-muted-foreground">
+            {row.original.saldoAntes}
+            <ArrowRight className="size-3" />
+            <span className="font-medium text-foreground">{row.original.saldoDepois}</span>
+          </span>
+        ),
+      },
+      {
+        accessorKey: 'responsavel',
+        header: 'Responsável',
+        cell: ({ row }) => (
+          <span className="flex items-center gap-2 whitespace-nowrap">
+            <NameAvatar name={row.original.responsavel} size="sm" />
+            {row.original.responsavel}
+          </span>
+        ),
       },
       {
         accessorKey: 'ref',

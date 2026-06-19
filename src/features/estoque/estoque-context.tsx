@@ -8,12 +8,20 @@ export interface MovimentoValues {
   tipo: MovTipo
   qtd: number
   ref?: string
+  responsavel?: string
 }
 
 interface EstoqueContextValue {
   itens: EstoqueItem[]
   movimentos: Movimento[]
   registrarMovimento: (v: MovimentoValues) => void
+}
+
+/** Calcula o novo saldo conforme o tipo (ajuste define o saldo absoluto). */
+function calcularSaldo(tipo: MovTipo, atual: number, qtd: number): number {
+  if (tipo === 'entrada') return atual + qtd
+  if (tipo === 'saida' || tipo === 'transferencia') return Math.max(0, atual - qtd)
+  return Math.max(0, qtd) // ajuste = novo saldo
 }
 
 const EstoqueContext = createContext<EstoqueContextValue | null>(null)
@@ -26,13 +34,12 @@ export function EstoqueProvider({ children }: { children: ReactNode }) {
     () => ({
       itens,
       movimentos,
-      registrarMovimento: ({ sku, tipo, qtd, ref }) => {
+      registrarMovimento: ({ sku, tipo, qtd, ref, responsavel }) => {
         const item = itens.find((i) => i.sku === sku)
         if (!item) return
-        const delta = tipo === 'saida' ? -qtd : qtd
-        setItens((prev) =>
-          prev.map((i) => (i.sku === sku ? { ...i, saldo: Math.max(0, i.saldo + delta) } : i)),
-        )
+        const antes = item.saldo
+        const depois = calcularSaldo(tipo, antes, qtd)
+        setItens((prev) => prev.map((i) => (i.sku === sku ? { ...i, saldo: depois } : i)))
         setMovimentos((prev) => [
           {
             id: Math.max(0, ...prev.map((m) => m.id)) + 1,
@@ -42,6 +49,9 @@ export function EstoqueProvider({ children }: { children: ReactNode }) {
             item: item.nome,
             qtd,
             ref: ref || '—',
+            saldoAntes: antes,
+            saldoDepois: depois,
+            responsavel: responsavel || 'André Lima',
           },
           ...prev,
         ])
