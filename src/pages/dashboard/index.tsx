@@ -66,14 +66,16 @@ export default function DashboardPage() {
                     <td className="px-6 py-3 font-medium">{p.cliente}</td>
                     <td className="px-6 py-3 text-muted-foreground">{p.ambiente}</td>
                     <td className="px-6 py-3">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <NameAvatar name={p.projetista} size="sm" />
                         {p.projetista}
                       </div>
                     </td>
-                    <td className="px-6 py-3 text-right tabular-nums">{p.valor}</td>
+                    <td className="whitespace-nowrap px-6 py-3 text-right tabular-nums">{p.valor}</td>
                     <td className="px-6 py-3">
-                      <StatusBadge tone={p.status.tone}>{p.status.label}</StatusBadge>
+                      <StatusBadge tone={p.status.tone} className="whitespace-nowrap">
+                        {p.status.label}
+                      </StatusBadge>
                     </td>
                   </tr>
                 ))}
