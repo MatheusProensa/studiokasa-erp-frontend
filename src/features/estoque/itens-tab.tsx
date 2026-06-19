@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus, MapPin } from 'lucide-react'
+import { Plus, MapPin, TrendingDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
@@ -39,11 +39,18 @@ export function ItensTab() {
         cell: ({ row }) => {
           const baixo = row.original.minimo > 0 && row.original.saldo < row.original.minimo
           return (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 whitespace-nowrap">
               <span className={`tabular-nums font-medium ${baixo ? 'text-[var(--status-danger)]' : ''}`}>
                 {row.original.saldo}
               </span>
-              {baixo && <StatusBadge tone="danger">Abaixo do mínimo</StatusBadge>}
+              {row.original.minimo > 0 && (
+                <span className="text-xs text-muted-foreground">/ mín {row.original.minimo}</span>
+              )}
+              {baixo && (
+                <span className="text-[var(--status-danger)]" title="Abaixo do mínimo">
+                  <TrendingDown className="size-3.5" />
+                </span>
+              )}
             </div>
           )
         },
