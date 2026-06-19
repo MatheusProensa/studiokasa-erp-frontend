@@ -20,9 +20,9 @@ function FiscalKpis() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-3">
-      <StatCard label="Notas autorizadas" value={String(stats.autorizadas)} icon={FileCheck2} />
-      <StatCard label="Rejeitadas" value={String(stats.rejeitadas)} icon={XCircle} />
-      <StatCard label="Crédito tributário" value={formatBRL(stats.credito)} icon={Coins} />
+      <StatCard label="Notas autorizadas" value={String(stats.autorizadas)} icon={FileCheck2} tone="success" />
+      <StatCard label="Rejeitadas" value={String(stats.rejeitadas)} icon={XCircle} tone="danger" />
+      <StatCard label="Crédito tributário" value={formatBRL(stats.credito)} icon={Coins} tone="success" />
     </div>
   )
 }

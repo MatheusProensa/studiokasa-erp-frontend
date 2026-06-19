@@ -19,8 +19,8 @@ function LogisticaKpis() {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
       <StatCard label="OS ativas" value={String(stats.ativas)} icon={Truck} />
-      <StatCard label="Concluídas" value={String(stats.concluidas)} icon={PackageCheck} />
-      <StatCard label="Avarias registradas" value={String(stats.avarias)} icon={AlertTriangle} />
+      <StatCard label="Concluídas" value={String(stats.concluidas)} icon={PackageCheck} tone="success" />
+      <StatCard label="Avarias registradas" value={String(stats.avarias)} icon={AlertTriangle} tone="danger" />
     </div>
   )
 }

@@ -21,7 +21,7 @@ function PosvendaKpis() {
     <div className="grid gap-4 sm:grid-cols-3">
       <StatCard label="Chamados abertos" value={String(stats.abertos)} icon={Wrench} />
       <StatCard label="Aguardando peça" value={String(stats.pecas)} icon={Clock} />
-      <StatCard label="NPS" value={String(NPS.score)} icon={Smile} />
+      <StatCard label="NPS" value={String(NPS.score)} icon={Smile} tone="success" />
     </div>
   )
 }

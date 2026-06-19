@@ -20,7 +20,7 @@ function EstoqueKpis() {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
       <StatCard label="SKUs em estoque" value={String(stats.skus)} icon={Package} />
-      <StatCard label="Abaixo do mínimo" value={String(stats.baixoMinimo)} icon={AlertTriangle} />
+      <StatCard label="Abaixo do mínimo" value={String(stats.baixoMinimo)} icon={AlertTriangle} tone="danger" />
       <StatCard label="Movimentações" value={String(stats.movHoje)} icon={ArrowLeftRight} />
     </div>
   )

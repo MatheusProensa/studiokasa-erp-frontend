@@ -17,8 +17,8 @@ function PedidosKpis() {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
       <StatCard label="Em produção" value={String(stats.emProducao)} icon={Factory} />
-      <StatCard label="Atrasados" value={String(stats.atrasados)} icon={AlarmClock} />
-      <StatCard label="Com divergência" value={String(stats.comDivergencia)} icon={AlertTriangle} />
+      <StatCard label="Atrasados" value={String(stats.atrasados)} icon={AlarmClock} tone="danger" />
+      <StatCard label="Com divergência" value={String(stats.comDivergencia)} icon={AlertTriangle} tone="danger" />
     </div>
   )
 }

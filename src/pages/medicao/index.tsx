@@ -17,8 +17,8 @@ function MedicaoKpis() {
   return (
     <div className="grid gap-4 sm:grid-cols-3">
       <StatCard label="Agendadas" value={String(stats.agendadas)} icon={CalendarClock} />
-      <StatCard label="Aprovadas" value={String(stats.aprovadas)} icon={ClipboardCheck} />
-      <StatCard label="Bloqueadas por alçada" value={String(stats.bloqueadas)} icon={ShieldAlert} />
+      <StatCard label="Aprovadas" value={String(stats.aprovadas)} icon={ClipboardCheck} tone="success" />
+      <StatCard label="Bloqueadas por alçada" value={String(stats.bloqueadas)} icon={ShieldAlert} tone="danger" />
     </div>
   )
 }
