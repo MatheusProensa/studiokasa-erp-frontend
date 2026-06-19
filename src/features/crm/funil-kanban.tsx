@@ -8,12 +8,12 @@ import {
   useDroppable,
   type DragEndEvent,
 } from '@dnd-kit/core'
-import { GripVertical, Move } from 'lucide-react'
+import { GripVertical, Move, ArrowRightCircle, Clock } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { NameAvatar } from '@/components/ui/name-avatar'
 import { cn } from '@/lib/utils'
-import { formatBRL } from '@/lib/format'
+import { formatBRL, formatDate } from '@/lib/format'
 import { STAGES, SCORE_META, type StageKey } from './constants'
 
 const DOT: Record<string, string> = {
@@ -53,6 +53,38 @@ function DealCard({ deal }: { deal: Deal }) {
         <Badge variant="secondary">{deal.origem}</Badge>
         <StatusBadge tone={SCORE_META[deal.score].tone}>Score {SCORE_META[deal.score].label}</StatusBadge>
       </div>
+
+      {/* Próxima ação + último contato */}
+      <div className="mt-2.5 grid grid-cols-2 gap-2 text-[11px]">
+        <div className="flex flex-col gap-0.5">
+          <span className="text-muted-foreground">Próxima ação</span>
+          <span className="flex items-center gap-1 font-medium">
+            <ArrowRightCircle className="size-3 text-primary" />
+            {deal.proximaAcao}
+          </span>
+        </div>
+        <div className="flex flex-col gap-0.5">
+          <span className="text-muted-foreground">Último contato</span>
+          <span className="flex items-center gap-1 font-medium">
+            <Clock className="size-3 text-muted-foreground" />
+            {formatDate(deal.ultimoContato)}
+          </span>
+        </div>
+      </div>
+
+      {/* Probabilidade */}
+      {deal.etapa !== 'perdido' && (
+        <div className="mt-2 space-y-1">
+          <div className="flex items-center justify-between text-[11px] text-muted-foreground">
+            <span>Probabilidade</span>
+            <span className="font-semibold text-foreground">{deal.probabilidade}%</span>
+          </div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-secondary" style={{ width: `${deal.probabilidade}%` }} />
+          </div>
+        </div>
+      )}
+
       <div className="mt-2.5 flex items-center gap-2 border-t pt-2 text-xs text-muted-foreground">
         <NameAvatar name={deal.vendedor} size="sm" />
         {deal.vendedor}

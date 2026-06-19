@@ -6,10 +6,16 @@ export interface Deal {
   cliente: string
   origem: Origem
   etapa: StageKey
-  /** Valor em centavos? Não — usamos number em reais pra simplicidade do mock. */
+  /** Valor em reais (mock). */
   valor: number
   vendedor: string
   score: Score
+  /** Próximo passo do vendedor (ex: "Ligar amanhã"). */
+  proximaAcao: string
+  /** Data do último contato (ISO). */
+  ultimoContato: string
+  /** Probabilidade de fechamento 0–100. */
+  probabilidade: number
 }
 
 /** Cliente cadastrado (CRM). */
