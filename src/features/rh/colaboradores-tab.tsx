@@ -1,13 +1,19 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { NameAvatar } from '@/components/ui/name-avatar'
+import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/data-table/data-table'
 import { formatDate } from '@/lib/format'
 import { COLABORADORES, type Colaborador } from './mock-data'
+import { ColaboradorFormDialog } from './colaborador-form-dialog'
 
 export function ColaboradoresTab() {
+  const [selecionado, setSelecionado] = useState<Colaborador | null>(null)
+  const [open, setOpen] = useState(false)
+  const [, setTick] = useState(0)
+
   const columns = useMemo<ColumnDef<Colaborador>[]>(
     () => [
       {
@@ -30,6 +36,11 @@ export function ColaboradoresTab() {
         cell: ({ row }) => <span className="text-muted-foreground">{formatDate(row.original.admissao)}</span>,
       },
       {
+        accessorKey: 'cpf',
+        header: 'CPF',
+        cell: ({ row }) => <span className="text-muted-foreground">{row.original.cpf ?? '—'}</span>,
+      },
+      {
         accessorKey: 'ativo',
         header: 'Status',
         cell: ({ row }) =>
@@ -39,16 +50,37 @@ export function ColaboradoresTab() {
             <StatusBadge tone="neutral">Inativo</StatusBadge>
           ),
       },
+      {
+        id: 'acoes',
+        header: '',
+        cell: ({ row }) => (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() => { setSelecionado(row.original); setOpen(true) }}
+          >
+            Editar
+          </Button>
+        ),
+      },
     ],
     [],
   )
 
   return (
-    <DataTable
-      columns={columns}
-      data={COLABORADORES}
-      searchPlaceholder="Buscar colaborador, cargo..."
-      emptyMessage="Nenhum colaborador."
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={COLABORADORES}
+        searchPlaceholder="Buscar colaborador, cargo..."
+        emptyMessage="Nenhum colaborador."
+      />
+      <ColaboradorFormDialog
+        open={open}
+        onOpenChange={setOpen}
+        colaborador={selecionado}
+        onSaved={() => setTick((t) => t + 1)}
+      />
+    </>
   )
 }

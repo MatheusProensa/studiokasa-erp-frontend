@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
@@ -10,13 +9,11 @@ import { formatDateTime } from '@/lib/format'
 import { STATUS_META } from './constants'
 import { useMedicoes } from './medicoes-context'
 import { MedicaoDetailSheet } from './medicao-detail-sheet'
-import { AgendarFormDialog } from './agendar-form-dialog'
 import type { Medicao } from './types'
 
 export function MedicoesTable() {
   const { medicoes } = useMedicoes()
   const [detail, setDetail] = useState<Medicao | null>(null)
-  const [agendar, setAgendar] = useState(false)
 
   const columns = useMemo<ColumnDef<Medicao>[]>(
     () => [
@@ -94,16 +91,9 @@ export function MedicoesTable() {
         data={medicoes}
         searchPlaceholder="Buscar medição, cliente..."
         emptyMessage="Nenhuma medição agendada."
-        toolbar={
-          <Button onClick={() => setAgendar(true)}>
-            <Plus className="size-4" />
-            Agendar medição
-          </Button>
-        }
       />
 
       <MedicaoDetailSheet medicao={detail} onOpenChange={(o) => !o && setDetail(null)} />
-      <AgendarFormDialog open={agendar} onOpenChange={setAgendar} />
     </>
   )
 }

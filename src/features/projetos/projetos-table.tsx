@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus, MoreHorizontal, Eye, Pencil, Trash2 } from 'lucide-react'
+import { MoreHorizontal, Eye, Pencil, Trash2, Copy } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -31,22 +31,22 @@ import { ProjetoFormDialog } from './projeto-form-dialog'
 import type { Projeto } from './types'
 
 export function ProjetosTable() {
-  const { projetosVisiveis: projetos, remover } = useProjetos()
+  const { projetosVisiveis: projetos, remover, salvar } = useProjetos()
   const [detail, setDetail] = useState<Projeto | null>(null)
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<Projeto | null>(null)
   const [deleting, setDeleting] = useState<Projeto | null>(null)
-
-  function handleNew() {
-    setEditing(null)
-    setFormOpen(true)
-  }
 
   function confirmDelete() {
     if (!deleting) return
     remover(deleting.id)
     toast.success(`Projeto ${deleting.codigo} excluído.`)
     setDeleting(null)
+  }
+
+  function duplicar(p: Projeto) {
+    salvar({ cliente: p.cliente, ambiente: `${p.ambiente} (cópia)`, projetista: p.projetista, etapa: 'projeto', valor: p.valor, software: p.software })
+    toast.success(`Projeto "${p.codigo} – ${p.cliente}" duplicado com sucesso.`)
   }
 
   const columns = useMemo<ColumnDef<Projeto>[]>(
@@ -90,6 +90,16 @@ export function ProjetosTable() {
         cell: ({ row }) => <span className="tabular-nums">{formatBRL(row.original.valor)}</span>,
       },
       {
+        accessorKey: 'aprovado',
+        header: 'Aprovação',
+        cell: ({ row }) =>
+          row.original.aprovado ? (
+            <StatusBadge tone="success">Aprovado</StatusBadge>
+          ) : (
+            <StatusBadge tone="warning">Aguardando</StatusBadge>
+          ),
+      },
+      {
         id: 'actions',
         header: '',
         enableSorting: false,
@@ -115,6 +125,10 @@ export function ProjetosTable() {
                   <Pencil className="mr-2 size-4" />
                   Editar
                 </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => duplicar(row.original)}>
+                  <Copy className="mr-2 size-4" />
+                  Duplicar
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setDeleting(row.original)} className="text-destructive">
                   <Trash2 className="mr-2 size-4" />
                   Excluir
@@ -134,13 +148,7 @@ export function ProjetosTable() {
         columns={columns}
         data={projetos}
         searchPlaceholder="Buscar projeto, cliente..."
-        emptyMessage="Nenhum projeto cadastrado."
-        toolbar={
-          <Button onClick={handleNew}>
-            <Plus className="size-4" />
-            Novo projeto
-          </Button>
-        }
+        emptyMessage="Nenhum projeto encontrado para os filtros selecionados."
       />
 
       <ProjetoDetailSheet projeto={detail} onOpenChange={(o) => !o && setDetail(null)} />

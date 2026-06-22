@@ -35,6 +35,9 @@ import type { AccessRole } from '@/types'
 import { userSchema, type UserFormValues } from './user-schema'
 import type { SystemUser } from './types'
 import { UNIDADES } from './mock-data'
+import { COLABORADORES } from '@/features/rh/mock-data'
+
+const SEM_COLABORADOR = '__none__'
 
 interface UserFormDialogProps {
   open: boolean
@@ -50,6 +53,7 @@ const EMPTY: UserFormValues = {
   unidade: '',
   roles: [],
   status: 'ativo',
+  colaboradorId: null,
 }
 
 export function UserFormDialog({ open, onOpenChange, user, onSubmit }: UserFormDialogProps) {
@@ -70,6 +74,7 @@ export function UserFormDialog({ open, onOpenChange, user, onSubmit }: UserFormD
               unidade: user.unidade,
               roles: user.roles,
               status: user.status,
+              colaboradorId: user.colaboradorId,
             }
           : EMPTY,
       )
@@ -96,6 +101,46 @@ export function UserFormDialog({ open, onOpenChange, user, onSubmit }: UserFormD
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="colaboradorId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Colaborador vinculado</FormLabel>
+                  <FormDescription>
+                    Selecione um colaborador do RH para preencher nome, e-mail e unidade automaticamente. Deixe em branco para usuários sem cadastro no RH (ex: consultor externo).
+                  </FormDescription>
+                  <Select
+                    value={field.value ? String(field.value) : SEM_COLABORADOR}
+                    onValueChange={(v) => {
+                      if (v === SEM_COLABORADOR) {
+                        field.onChange(null)
+                        return
+                      }
+                      const colaborador = COLABORADORES.find((c) => c.id === Number(v))
+                      field.onChange(Number(v))
+                      if (colaborador) {
+                        form.setValue('name', colaborador.nome)
+                        if (colaborador.email) form.setValue('email', colaborador.email)
+                        form.setValue('unidade', colaborador.unidade)
+                      }
+                    }}
+                  >
+                    <FormControl>
+                      <SelectTrigger><SelectValue placeholder="Selecione um colaborador" /></SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value={SEM_COLABORADOR}>Nenhum (usuário externo)</SelectItem>
+                      {COLABORADORES.map((c) => (
+                        <SelectItem key={c.id} value={String(c.id)}>{c.nome} — {c.cargo}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="name"

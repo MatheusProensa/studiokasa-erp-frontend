@@ -13,6 +13,7 @@ export const userSchema = z.object({
   unidade: z.string().min(1, 'Selecione a unidade.'),
   roles: z.array(z.enum(ROLE_VALUES)).min(1, 'Selecione ao menos um papel.'),
   status: z.enum(['ativo', 'inativo']),
+  colaboradorId: z.number().nullable(),
 })
 
 export type UserFormValues = z.infer<typeof userSchema>

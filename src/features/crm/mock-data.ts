@@ -3,12 +3,12 @@ import type { Cliente, Deal } from './types'
 /** Oportunidades de exemplo — distribuídas pelas etapas do funil. */
 export const DEALS: Deal[] = [
   { id: 1, cliente: 'Helena Moretti', origem: 'Indicação', etapa: 'orcamento-enviado', valor: 42800, vendedor: 'Marina Alves', score: 'alta', proximaAcao: 'Aguardar retorno', ultimoContato: '2026-06-17', probabilidade: 60 },
-  { id: 2, cliente: 'Construtora Vega', origem: 'Arquiteto', etapa: 'negociacao', valor: 158200, vendedor: 'Carlos Dias', score: 'alta', proximaAcao: 'Ajustar proposta', ultimoContato: '2026-06-17', probabilidade: 80 },
+  { id: 2, cliente: 'Construtora Vega Ltda', origem: 'Arquiteto', etapa: 'negociacao', valor: 158200, vendedor: 'Carlos Dias', score: 'alta', proximaAcao: 'Ajustar proposta', ultimoContato: '2026-06-17', probabilidade: 80 },
   { id: 3, cliente: 'Rafael Nunes', origem: 'Loja física', etapa: 'fechado', valor: 23400, vendedor: 'Marina Alves', score: 'media', proximaAcao: 'Gerar contrato', ultimoContato: '2026-06-16', probabilidade: 100 },
   { id: 4, cliente: 'Joana Prado', origem: 'Instagram', etapa: 'primeiro-contato', valor: 0, vendedor: 'Rui Pena', score: 'baixa', proximaAcao: 'Ligar amanhã', ultimoContato: '2026-06-16', probabilidade: 20 },
-  { id: 5, cliente: 'Ana Beatriz', origem: 'Indicação', etapa: 'orcamento-enviado', valor: 67900, vendedor: 'Rui Pena', score: 'media', proximaAcao: 'Reunião agendada', ultimoContato: '2026-06-16', probabilidade: 70 },
+  { id: 5, cliente: 'Ana Beatriz Souza', origem: 'Indicação', etapa: 'orcamento-enviado', valor: 67900, vendedor: 'Rui Pena', score: 'media', proximaAcao: 'Reunião agendada', ultimoContato: '2026-06-16', probabilidade: 70 },
   { id: 6, cliente: 'Marcos Lima', origem: 'Anúncio', etapa: 'perdido', valor: 18900, vendedor: 'Carlos Dias', score: 'baixa', proximaAcao: 'Sem ação', ultimoContato: '2026-06-10', probabilidade: 0 },
-  { id: 7, cliente: 'Studio Lume', origem: 'Arquiteto', etapa: 'negociacao', valor: 51300, vendedor: 'Carlos Dias', score: 'alta', proximaAcao: 'Desconto especial', ultimoContato: '2026-06-14', probabilidade: 50 },
+  { id: 7, cliente: 'Studio Lume Arquitetura', origem: 'Arquiteto', etapa: 'negociacao', valor: 51300, vendedor: 'Carlos Dias', score: 'alta', proximaAcao: 'Desconto especial', ultimoContato: '2026-06-14', probabilidade: 50 },
   { id: 8, cliente: 'Pedro Hauser', origem: 'Instagram', etapa: 'primeiro-contato', valor: 0, vendedor: 'Marina Alves', score: 'media', proximaAcao: 'Enviar portfólio', ultimoContato: '2026-06-15', probabilidade: 30 },
   { id: 9, cliente: 'Família Tonin', origem: 'Loja física', etapa: 'fechado', valor: 89500, vendedor: 'Rui Pena', score: 'alta', proximaAcao: 'Gerar contrato', ultimoContato: '2026-06-13', probabilidade: 100 },
   { id: 10, cliente: 'Clara Bevilacqua', origem: 'Indicação', etapa: 'negociacao', valor: 34200, vendedor: 'Marina Alves', score: 'media', proximaAcao: 'Follow-up', ultimoContato: '2026-06-15', probabilidade: 55 },

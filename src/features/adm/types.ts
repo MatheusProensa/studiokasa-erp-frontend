@@ -13,4 +13,6 @@ export interface SystemUser {
   unidade: string
   /** ISO date do último acesso (ou null se nunca acessou). */
   lastAccess: string | null
+  /** Vincula a um colaborador do RH (features/rh/mock-data); null = usuário sem colaborador (ex: externo). */
+  colaboradorId: number | null
 }

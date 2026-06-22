@@ -54,7 +54,7 @@ export const ORDENS: OrdemServico[] = [
   {
     id: 4,
     codigo: 'OS-1005',
-    cliente: 'Construtora Vega',
+    cliente: 'Construtora Vega Ltda',
     ambiente: 'Home office (12 un.)',
     equipe: 'Equipe C',
     veiculo: 'Caminhão · GHI-7J89',

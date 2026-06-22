@@ -1,15 +1,16 @@
 export interface EtapaPortal {
   label: string
   estado: 'concluida' | 'atual' | 'pendente'
+  data?: string
 }
 
 export const JORNADA: EtapaPortal[] = [
-  { label: 'Contrato assinado', estado: 'concluida' },
-  { label: 'Projeto aprovado', estado: 'concluida' },
-  { label: 'Medição final', estado: 'concluida' },
-  { label: 'Em produção (fornecedor)', estado: 'atual' },
-  { label: 'A caminho', estado: 'pendente' },
-  { label: 'Montagem', estado: 'pendente' },
+  { label: 'Contrato assinado', estado: 'concluida', data: '05/05/2026' },
+  { label: 'Projeto aprovado', estado: 'concluida', data: '12/05/2026' },
+  { label: 'Medição final', estado: 'concluida', data: '20/05/2026' },
+  { label: 'Em produção (fornecedor)', estado: 'atual', data: 'Previsão: 28/06/2026' },
+  { label: 'A caminho', estado: 'pendente', data: 'Previsão: 02/07/2026' },
+  { label: 'Montagem', estado: 'pendente', data: 'Previsão: 07/07/2026' },
 ]
 
 export interface Agenda {
@@ -42,7 +43,7 @@ export interface Documento {
 export const DOCUMENTOS: Documento[] = [
   { nome: 'Contrato de venda', tipo: 'PDF' },
   { nome: 'Projeto 3D — Cozinha', tipo: 'PDF' },
-  { nome: 'Comprovante de pagamento (entrada)', tipo: 'PDF' },
+  { nome: 'Manual de cuidados', tipo: 'PDF' },
 ]
 
 export const PROJETO_CLIENTE = {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { LogIn, LogOut, ArrowRight, AlertTriangle, Plus, Truck } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { LogIn, LogOut, ArrowRight, AlertTriangle, Plus, Truck, Headset, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import {
   Sheet,
@@ -29,6 +30,7 @@ export function OsDetailSheet({ os, onOpenChange }: Props) {
   const { checkIn, checkOut, toggleItem, avancarStatus, registrarAvaria } = useLogistica()
   const [peca, setPeca] = useState('')
   const [descricao, setDescricao] = useState('')
+  const navigate = useNavigate()
 
   if (!os) return null
   const o = os
@@ -90,6 +92,21 @@ export function OsDetailSheet({ os, onOpenChange }: Props) {
             <Button onClick={() => avancarStatus(o.id)}>
               <ArrowRight className="size-4" /> Avançar para {OS_STATUS_META[next].label}
             </Button>
+          )}
+
+          {o.status === 'concluida' && (
+            <div className="space-y-2 rounded-lg border border-[var(--status-success)]/40 bg-[var(--status-success-soft)] p-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Check className="size-4 text-[var(--status-success)]" />
+                Entrega concluída — pós-venda disponível para abertura de chamados.
+              </div>
+              <Button
+                size="sm"
+                onClick={() => navigate(`/posvenda?cliente=${encodeURIComponent(o.cliente)}&projeto=${encodeURIComponent(o.codigo)}`)}
+              >
+                <Headset className="size-4" /> Abrir pós-venda
+              </Button>
+            </div>
           )}
 
           <Separator />

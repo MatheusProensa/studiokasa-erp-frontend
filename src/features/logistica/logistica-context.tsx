@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
-import { proximoStatus } from './constants'
+import { proximoStatus, CHECKLIST_FASES } from './constants'
 import { ORDENS } from './mock-data'
 import type { Avaria, OrdemServico } from './types'
 
@@ -10,6 +10,7 @@ interface LogisticaContextValue {
   toggleItem: (id: number, fase: number, item: number) => void
   avancarStatus: (id: number) => void
   registrarAvaria: (id: number, a: Avaria) => void
+  adicionarOrdem: (o: Omit<OrdemServico, 'id' | 'checkIn' | 'checkOut' | 'checklist' | 'avarias'>) => void
 }
 
 const LogisticaContext = createContext<LogisticaContextValue | null>(null)
@@ -43,6 +44,18 @@ export function LogisticaProvider({ children }: { children: ReactNode }) {
         }),
       registrarAvaria: (id, a) =>
         update(id, (o) => ({ ...o, avarias: [...o.avarias, a] })),
+      adicionarOrdem: (data) =>
+        setOrdens((prev) => [
+          ...prev,
+          {
+            ...data,
+            id: Math.max(0, ...prev.map((o) => o.id)) + 1,
+            checkIn: null,
+            checkOut: null,
+            checklist: CHECKLIST_FASES.map((f) => ({ fase: f.fase, itens: f.itens.map((label) => ({ label, ok: false })) })),
+            avarias: [],
+          },
+        ]),
     }),
     [ordens],
   )

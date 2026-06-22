@@ -7,6 +7,7 @@ interface FinanceiroContextValue {
   comissoes: Comissao[]
   quitar: (id: number) => void
   avancarComissao: (id: number) => void
+  adicionarTitulo: (t: Omit<Titulo, 'id'>) => void
 }
 
 const FinanceiroContext = createContext<FinanceiroContextValue | null>(null)
@@ -29,6 +30,8 @@ export function FinanceiroProvider({ children }: { children: ReactNode }) {
               : { ...c, status: c.status === 'pendente' ? 'liberada' : 'paga' },
           ),
         ),
+      adicionarTitulo: (t) =>
+        setTitulos((prev) => [...prev, { ...t, id: Math.max(0, ...prev.map((x) => x.id)) + 1 }]),
     }),
     [titulos, comissoes],
   )

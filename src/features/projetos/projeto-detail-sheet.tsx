@@ -1,4 +1,6 @@
-import { History, Package, BadgeCheck } from 'lucide-react'
+import { useState } from 'react'
+import { History, Package, BadgeCheck, Pencil, Trash2, Copy } from 'lucide-react'
+import { toast } from 'sonner'
 import {
   Sheet,
   SheetContent,
@@ -11,9 +13,14 @@ import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { Separator } from '@/components/ui/separator'
 import { NameAvatar } from '@/components/ui/name-avatar'
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { formatBRL, formatDateTime } from '@/lib/format'
 import { ETAPA_MAP } from './constants'
 import { useProjetos } from './projetos-context'
+import { ProjetoFormDialog } from './projeto-form-dialog'
 import type { Projeto } from './types'
 
 interface ProjetoDetailSheetProps {
@@ -22,22 +29,60 @@ interface ProjetoDetailSheetProps {
 }
 
 export function ProjetoDetailSheet({ projeto, onOpenChange }: ProjetoDetailSheetProps) {
-  const { aprovar } = useProjetos()
+  const { aprovar, remover, salvar } = useProjetos()
+  const [editOpen, setEditOpen] = useState(false)
+  const [confirmarExclusao, setConfirmarExclusao] = useState(false)
+
   if (!projeto) return null
   const etapa = ETAPA_MAP[projeto.etapa]
+
+  const projetoAtual = projeto
+
+  function handleExcluir() {
+    remover(projetoAtual.id)
+    toast.success(`Projeto ${projetoAtual.codigo} excluído.`)
+    setConfirmarExclusao(false)
+    onOpenChange(false)
+  }
+
+  function handleDuplicar() {
+    salvar({
+      cliente: projetoAtual.cliente,
+      ambiente: `${projetoAtual.ambiente} (cópia)`,
+      projetista: projetoAtual.projetista,
+      etapa: 'projeto',
+      valor: projetoAtual.valor,
+      software: projetoAtual.software,
+    })
+    toast.success(`Projeto "${projetoAtual.codigo} – ${projetoAtual.cliente}" duplicado com sucesso.`)
+    onOpenChange(false)
+  }
 
   return (
     <Sheet open={Boolean(projeto)} onOpenChange={onOpenChange}>
       <SheetContent className="w-full overflow-y-auto sm:max-w-xl">
         <SheetHeader>
-          <div className="flex items-center gap-2">
-            <Badge variant="outline">{projeto.codigo}</Badge>
-            <StatusBadge tone={etapa.tone}>{etapa.label}</StatusBadge>
-            {projeto.aprovado ? (
-              <StatusBadge tone="success">Aprovado</StatusBadge>
-            ) : (
-              <StatusBadge tone="warning">Aguardando aprovação</StatusBadge>
-            )}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Badge variant="outline">{projeto.codigo}</Badge>
+              <StatusBadge tone={etapa.tone}>{etapa.label}</StatusBadge>
+              {projeto.aprovado ? (
+                <StatusBadge tone="success">Aprovado</StatusBadge>
+              ) : (
+                <StatusBadge tone="warning">Aguardando aprovação</StatusBadge>
+              )}
+            </div>
+            <div className="flex items-center gap-1">
+              <Button variant="ghost" size="icon" className="size-8" aria-label="Editar" onClick={() => setEditOpen(true)}>
+                <Pencil className="size-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="size-8" aria-label="Duplicar" onClick={handleDuplicar}>
+                <Copy className="size-4" />
+              </Button>
+              <Button variant="ghost" size="icon" className="size-8 text-destructive" aria-label="Excluir" onClick={() => setConfirmarExclusao(true)}>
+                <Trash2 className="size-4" />
+              </Button>
+            </div>
           </div>
           <SheetTitle>{projeto.ambiente}</SheetTitle>
           <SheetDescription>
@@ -132,6 +177,25 @@ export function ProjetoDetailSheet({ projeto, onOpenChange }: ProjetoDetailSheet
           </section>
         </div>
       </SheetContent>
+
+      <ProjetoFormDialog open={editOpen} onOpenChange={setEditOpen} projeto={projeto} />
+
+      <AlertDialog open={confirmarExclusao} onOpenChange={setConfirmarExclusao}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir projeto?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação removerá <strong>{projeto.codigo}</strong> ({projeto.ambiente}). Não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleExcluir} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Excluir
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Sheet>
   )
 }

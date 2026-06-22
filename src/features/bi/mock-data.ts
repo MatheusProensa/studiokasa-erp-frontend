@@ -15,10 +15,10 @@ export const RANKING_VENDEDORES = [
 ]
 
 export const CURVA_ABC = [
-  { nome: 'Construtora Vega', valor: 158200, classe: 'A' as const },
+  { nome: 'Construtora Vega Ltda', valor: 158200, classe: 'A' as const },
   { nome: 'Família Tonin', valor: 89500, classe: 'A' as const },
-  { nome: 'Ana Beatriz', valor: 67900, classe: 'B' as const },
-  { nome: 'Studio Lume', valor: 51300, classe: 'B' as const },
+  { nome: 'Ana Beatriz Souza', valor: 67900, classe: 'B' as const },
+  { nome: 'Studio Lume Arquitetura', valor: 51300, classe: 'B' as const },
   { nome: 'Helena Moretti', valor: 42800, classe: 'C' as const },
   { nome: 'Rafael Nunes', valor: 23400, classe: 'C' as const },
 ]

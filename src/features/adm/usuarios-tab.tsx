@@ -15,12 +15,14 @@ import {
 } from '@/components/ui/alert-dialog'
 import { buildUserColumns } from './user-columns'
 import { UserFormDialog } from './user-form-dialog'
-import { MOCK_USERS } from './mock-data'
 import type { SystemUser } from './types'
 import type { UserFormValues } from './user-schema'
 
-export function UsuariosTab() {
-  const [users, setUsers] = useState<SystemUser[]>(MOCK_USERS)
+export function UsuariosTab({ users, onUsersChange }: {
+  users: SystemUser[]
+  onUsersChange: (users: SystemUser[]) => void
+}) {
+  const setUsers = (updater: (prev: SystemUser[]) => SystemUser[]) => onUsersChange(updater(users))
   const [formOpen, setFormOpen] = useState(false)
   const [editing, setEditing] = useState<SystemUser | null>(null)
   const [deleting, setDeleting] = useState<SystemUser | null>(null)

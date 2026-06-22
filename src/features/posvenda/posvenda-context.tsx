@@ -7,6 +7,7 @@ interface PosvendaContextValue {
   atender: (id: number) => void
   solicitarPeca: (id: number, peca: string) => void
   encerrar: (id: number) => void
+  adicionarChamado: (c: Omit<Chamado, 'id' | 'codigo' | 'abertoEm' | 'status' | 'pecaSolicitada'>) => void
 }
 
 const PosvendaContext = createContext<PosvendaContextValue | null>(null)
@@ -24,6 +25,11 @@ export function PosvendaProvider({ children }: { children: ReactNode }) {
       solicitarPeca: (id, peca) =>
         update(id, (c) => ({ ...c, status: 'peca-solicitada', pecaSolicitada: peca })),
       encerrar: (id) => update(id, (c) => ({ ...c, status: 'encerrado' })),
+      adicionarChamado: (data) =>
+        setChamados((prev) => {
+          const id = Math.max(0, ...prev.map((c) => c.id)) + 1
+          return [...prev, { ...data, id, codigo: `AS-${500 + id}`, abertoEm: new Date().toISOString(), status: 'aberto', pecaSolicitada: null }]
+        }),
     }),
     [chamados],
   )

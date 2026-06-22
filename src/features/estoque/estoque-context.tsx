@@ -1,5 +1,5 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
-import type { MovTipo } from './constants'
+import type { ItemStatus, MovTipo } from './constants'
 import { ITENS, MOVIMENTOS } from './mock-data'
 import type { EstoqueItem, Movimento } from './types'
 
@@ -15,6 +15,7 @@ interface EstoqueContextValue {
   itens: EstoqueItem[]
   movimentos: Movimento[]
   registrarMovimento: (v: MovimentoValues) => void
+  alterarStatusItem: (sku: string, status: ItemStatus) => void
 }
 
 /** Calcula o novo saldo conforme o tipo (ajuste define o saldo absoluto). */
@@ -56,6 +57,8 @@ export function EstoqueProvider({ children }: { children: ReactNode }) {
           ...prev,
         ])
       },
+      alterarStatusItem: (sku, status) =>
+        setItens((prev) => prev.map((i) => (i.sku === sku ? { ...i, status } : i))),
     }),
     [itens, movimentos],
   )

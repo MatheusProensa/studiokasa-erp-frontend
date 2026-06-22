@@ -45,7 +45,7 @@ export const MEDICOES: Medicao[] = [
   {
     id: 3,
     codigo: 'MED-0103',
-    cliente: 'Ana Beatriz',
+    cliente: 'Ana Beatriz Souza',
     projeto: 'PRJ-0045',
     ambiente: 'Closet + banheiro',
     tipo: 'preliminar',
@@ -61,7 +61,7 @@ export const MEDICOES: Medicao[] = [
   {
     id: 4,
     codigo: 'MED-0104',
-    cliente: 'Construtora Vega',
+    cliente: 'Construtora Vega Ltda',
     projeto: 'PRJ-0043',
     ambiente: 'Home office (12 un.)',
     tipo: 'final',

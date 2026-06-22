@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select'
 import { ETAPAS, SOFTWARES_3D } from './constants'
 import { PROJETISTAS } from './mock-data'
+import { CLIENTES } from '@/features/crm/mock-data'
 import { projetoSchema, type ProjetoSchemaValues } from './projeto-schema'
 import { useProjetos, type ProjetoFormValues } from './projetos-context'
 import type { Projeto } from './types'
@@ -96,9 +97,20 @@ export function ProjetoFormDialog({ open, onOpenChange, projeto }: ProjetoFormDi
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Cliente</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Ex: Helena Moretti" {...field} />
-                    </FormControl>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione um cliente do CRM" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {CLIENTES.map((c) => (
+                          <SelectItem key={c.id} value={c.nome}>
+                            {c.nome}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}

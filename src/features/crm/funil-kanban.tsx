@@ -15,6 +15,8 @@ import { NameAvatar } from '@/components/ui/name-avatar'
 import { cn } from '@/lib/utils'
 import { formatBRL, formatDate } from '@/lib/format'
 import { STAGES, SCORE_META, type StageKey } from './constants'
+import { NovoLeadDialog } from './novo-lead-dialog'
+import type { Deal } from './types'
 
 const DOT: Record<string, string> = {
   info: 'var(--status-info)',
@@ -23,8 +25,6 @@ const DOT: Record<string, string> = {
   danger: 'var(--status-danger)',
   neutral: 'var(--status-neutral)',
 }
-import { DEALS } from './mock-data'
-import type { Deal } from './types'
 
 function DealCard({ deal }: { deal: Deal }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: deal.id })
@@ -93,7 +93,7 @@ function DealCard({ deal }: { deal: Deal }) {
   )
 }
 
-function Column({ stage, deals }: { stage: (typeof STAGES)[number]; deals: Deal[] }) {
+function Column({ stage, deals, onNovoLead }: { stage: (typeof STAGES)[number]; deals: Deal[]; onNovoLead: (etapa: StageKey) => void }) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.key })
   const total = deals.reduce((s, d) => s + d.valor, 0)
   return (
@@ -116,7 +116,10 @@ function Column({ stage, deals }: { stage: (typeof STAGES)[number]; deals: Deal[
         {deals.map((deal) => (
           <DealCard key={deal.id} deal={deal} />
         ))}
-        <button className="mt-1 rounded-lg border border-dashed py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground">
+        <button
+          className="mt-1 rounded-lg border border-dashed py-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-background hover:text-foreground"
+          onClick={() => onNovoLead(stage.key)}
+        >
           + Novo lead
         </button>
       </div>
@@ -124,26 +127,38 @@ function Column({ stage, deals }: { stage: (typeof STAGES)[number]; deals: Deal[
   )
 }
 
-export function FunilKanban() {
-  const [deals, setDeals] = useState<Deal[]>(DEALS)
+export function FunilKanban({ deals, onDealsChange }: { deals: Deal[]; onDealsChange: (deals: Deal[]) => void }) {
+  const [novoLeadEtapa, setNovoLeadEtapa] = useState<StageKey | null>(null)
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
 
   function onDragEnd(e: DragEndEvent) {
     const id = Number(e.active.id)
     const etapa = e.over?.id as StageKey | undefined
-    if (etapa) setDeals((prev) => prev.map((d) => (d.id === id ? { ...d, etapa } : d)))
+    if (etapa) onDealsChange(deals.map((d) => (d.id === id ? { ...d, etapa } : d)))
   }
 
   return (
     <DndContext sensors={sensors} onDragEnd={onDragEnd}>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {STAGES.map((stage) => (
-          <Column key={stage.key} stage={stage} deals={deals.filter((d) => d.etapa === stage.key)} />
+          <Column
+            key={stage.key}
+            stage={stage}
+            deals={deals.filter((d) => d.etapa === stage.key)}
+            onNovoLead={setNovoLeadEtapa}
+          />
         ))}
       </div>
       <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
         <Move className="size-3.5" /> Arraste os cards para mover entre as etapas do funil
       </p>
+
+      <NovoLeadDialog
+        open={novoLeadEtapa !== null}
+        onOpenChange={(o) => !o && setNovoLeadEtapa(null)}
+        etapa={novoLeadEtapa ?? 'primeiro-contato'}
+        onCreated={(deal) => onDealsChange([deal, ...deals])}
+      />
     </DndContext>
   )
 }

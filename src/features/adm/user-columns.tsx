@@ -10,8 +10,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { Link2, Link2Off } from 'lucide-react'
 import { ROLE_LABELS } from '@/lib/roles'
 import { formatDateTime } from '@/lib/format'
+import { COLABORADORES } from '@/features/rh/mock-data'
 import type { SystemUser } from './types'
 
 interface ColumnActions {
@@ -52,6 +54,24 @@ export function buildUserColumns({ onEdit, onDelete }: ColumnActions): ColumnDef
       accessorKey: 'unidade',
       header: 'Unidade',
       cell: ({ row }) => <span className="text-muted-foreground">{row.original.unidade}</span>,
+    },
+    {
+      id: 'colaborador',
+      header: 'Colaborador (RH)',
+      cell: ({ row }) => {
+        const colaborador = COLABORADORES.find((c) => c.id === row.original.colaboradorId)
+        return colaborador ? (
+          <span className="flex items-center gap-1.5 text-sm">
+            <Link2 className="size-3.5 text-[var(--status-success)]" />
+            {colaborador.nome}
+          </span>
+        ) : (
+          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <Link2Off className="size-3.5" />
+            Sem vínculo
+          </span>
+        )
+      },
     },
     {
       accessorKey: 'status',

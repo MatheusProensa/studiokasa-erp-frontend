@@ -45,16 +45,20 @@ const EMPTY: Values = { sku: '', tipo: 'entrada', qtd: 1, ref: '', responsavel: 
 export function MovimentoDialog({
   open,
   onOpenChange,
+  tipoInicial,
+  refInicial,
 }: {
   open: boolean
   onOpenChange: (o: boolean) => void
+  tipoInicial?: Values['tipo']
+  refInicial?: string
 }) {
   const { itens, registrarMovimento } = useEstoque()
   const form = useForm<Values>({ resolver: zodResolver(schema), defaultValues: EMPTY })
 
   useEffect(() => {
-    if (open) form.reset(EMPTY)
-  }, [open, form])
+    if (open) form.reset({ ...EMPTY, tipo: tipoInicial ?? 'entrada', ref: refInicial ?? '' })
+  }, [open, form, tipoInicial, refInicial])
 
   function handleSubmit(v: Values) {
     registrarMovimento(v)

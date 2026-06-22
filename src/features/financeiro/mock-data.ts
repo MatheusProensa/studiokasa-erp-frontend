@@ -3,7 +3,7 @@ import type { Comissao, Titulo } from './types'
 export const TITULOS: Titulo[] = [
   // A receber
   { id: 1, tipo: 'receber', descricao: 'Entrada cozinha — Helena Moretti', contraparte: 'Helena Moretti', categoria: 'PIX', valor: 21400, vencimento: '2026-06-20', status: 'aberto' },
-  { id: 2, tipo: 'receber', descricao: 'Parcela 2/3 — Construtora Vega', contraparte: 'Construtora Vega', categoria: 'Boleto', valor: 52733, vencimento: '2026-06-12', status: 'vencido' },
+  { id: 2, tipo: 'receber', descricao: 'Parcela 2/3 — Construtora Vega Ltda', contraparte: 'Construtora Vega Ltda', categoria: 'Boleto', valor: 52733, vencimento: '2026-06-12', status: 'vencido' },
   { id: 3, tipo: 'receber', descricao: 'Quitação dormitório — Rafael Nunes', contraparte: 'Rafael Nunes', categoria: 'Cartão', valor: 23400, vencimento: '2026-06-08', status: 'pago' },
   { id: 4, tipo: 'receber', descricao: 'Financiamento — Família Tonin', contraparte: 'Família Tonin', categoria: 'Financiamento', valor: 44750, vencimento: '2026-06-30', status: 'aberto' },
   // A pagar
@@ -18,6 +18,6 @@ export const COMISSOES: Comissao[] = [
   { id: 1, beneficiario: 'Marina Alves', papel: 'Vendedor', referencia: 'PRJ-0042', valor: 2140, status: 'pendente' },
   { id: 2, beneficiario: 'Carlos Dias', papel: 'Vendedor', referencia: 'PRJ-0043', valor: 7910, status: 'liberada' },
   { id: 3, beneficiario: 'Rui Pena', papel: 'Vendedor', referencia: 'PRJ-0044', valor: 1170, status: 'paga' },
-  { id: 4, beneficiario: 'Studio Lume', papel: 'Arquiteto', referencia: 'PRJ-0046', valor: 2565, status: 'pendente' },
+  { id: 4, beneficiario: 'Studio Lume Arquitetura', papel: 'Arquiteto', referencia: 'PRJ-0046', valor: 2565, status: 'pendente' },
   { id: 5, beneficiario: 'José Montador', papel: 'Montador', referencia: 'PRJ-0044', valor: 800, status: 'liberada' },
 ]

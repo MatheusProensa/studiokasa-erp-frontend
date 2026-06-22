@@ -8,9 +8,9 @@ import { StatusBadge } from '@/components/ui/status-badge'
 import { DataTable } from '@/components/data-table/data-table'
 import { formatBRL } from '@/lib/format'
 import { SUGESTOES } from './mock-data'
-import type { SugestaoCompra } from './types'
+import type { Cotacao, SugestaoCompra } from './types'
 
-export function SugestoesTab() {
+export function SugestoesTab({ onCotacaoGerada }: { onCotacaoGerada: (c: Cotacao) => void }) {
   const columns = useMemo<ColumnDef<SugestaoCompra>[]>(
     () => [
       {
@@ -55,7 +55,19 @@ export function SugestoesTab() {
             <Button
               variant="outline"
               size="sm"
-              onClick={() => toast.success(`Cotação gerada para "${row.original.item}".`)}
+              onClick={() => {
+                const s = row.original
+                onCotacaoGerada({
+                  id: Date.now(),
+                  codigo: `COT-${3000 + Math.floor(Math.random() * 900)}`,
+                  descricao: s.item,
+                  status: 'aberta',
+                  criadaEm: new Date().toISOString(),
+                  itens: [s.item],
+                  propostas: [{ fornecedor: s.melhorFornecedor, valorTotal: s.sugestao * s.precoUnit, prazoDias: 5 }],
+                })
+                toast.success(`Cotação gerada para "${s.item}" — confira na aba Cotações.`)
+              }}
             >
               <ShoppingCart className="size-4" /> Gerar cotação
             </Button>

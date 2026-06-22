@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import type { ColumnDef } from '@tanstack/react-table'
-import { Plus, AlertTriangle } from 'lucide-react'
+import { AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { StatusBadge } from '@/components/ui/status-badge'
@@ -94,12 +94,6 @@ export function PedidosTable() {
         data={pedidos}
         searchPlaceholder="Buscar pedido, fornecedor..."
         emptyMessage="Nenhum pedido ao fornecedor."
-        toolbar={
-          <Button onClick={() => setNovo(true)}>
-            <Plus className="size-4" />
-            Novo pedido
-          </Button>
-        }
       />
 
       <PedidoDetailSheet pedido={detail} onOpenChange={(o) => !o && setDetail(null)} />

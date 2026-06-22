@@ -18,6 +18,7 @@ import { formatDateTime } from '@/lib/format'
 import { CHAMADO_STATUS_META, PRIORIDADE_META } from './constants'
 import { usePosvenda } from './posvenda-context'
 import type { Chamado } from './types'
+import { PEDIDOS } from '@/features/pedidos/mock-data'
 
 interface Props {
   chamado: Chamado | null
@@ -82,7 +83,24 @@ export function ChamadoDetailSheet({ chamado, onOpenChange }: Props) {
                   <Button
                     variant="outline"
                     disabled={!peca}
-                    onClick={() => { solicitarPeca(c.id, peca); toast.success('Pedido de reposição gerado ao fornecedor.'); setPeca('') }}
+                    onClick={() => {
+                      solicitarPeca(c.id, peca)
+                      const novoId = Math.max(0, ...PEDIDOS.map((p) => p.id)) + 1
+                      PEDIDOS.unshift({
+                        id: novoId,
+                        codigo: `PC-${2000 + novoId}`,
+                        projeto: c.projeto,
+                        ambiente: `Reposição — ${c.assunto}`,
+                        fornecedor: 'A definir',
+                        status: 'em-producao',
+                        prazoEntrega: new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10),
+                        valor: 0,
+                        itens: [{ nome: peca, qtd: 1 }],
+                        divergencias: [],
+                      })
+                      toast.success('Pedido de reposição gerado ao fornecedor — confira em Pedido ao Fornecedor.')
+                      setPeca('')
+                    }}
                   >
                     <PackagePlus className="size-4" /> Solicitar
                   </Button>

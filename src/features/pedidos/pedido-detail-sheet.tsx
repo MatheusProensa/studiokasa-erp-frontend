@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { ArrowRight, AlertTriangle, Plus, CalendarClock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { ArrowRight, AlertTriangle, Plus, CalendarClock, PackageCheck, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import {
   Sheet,
@@ -39,6 +40,7 @@ export function PedidoDetailSheet({ pedido, onOpenChange }: Props) {
   const { avancarStatus, registrarDivergencia } = usePedidos()
   const [tipo, setTipo] = useState<DivergenciaTipo | ''>('')
   const [descricao, setDescricao] = useState('')
+  const navigate = useNavigate()
 
   if (!pedido) return null
   const p = pedido
@@ -114,6 +116,21 @@ export function PedidoDetailSheet({ pedido, onOpenChange }: Props) {
               <ArrowRight className="size-4" />
               Avançar para {STATUS_META[next].label}
             </Button>
+          )}
+
+          {p.status === 'recebido' && (
+            <div className="space-y-2 rounded-lg border border-[var(--status-success)]/40 bg-[var(--status-success-soft)] p-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Check className="size-4 text-[var(--status-success)]" />
+                Pedido recebido — itens liberados para entrada no estoque.
+              </div>
+              <Button
+                size="sm"
+                onClick={() => navigate(`/estoque?pedido=${encodeURIComponent(p.codigo)}&fornecedor=${encodeURIComponent(p.fornecedor)}`)}
+              >
+                <PackageCheck className="size-4" /> Registrar entrada no estoque
+              </Button>
+            </div>
           )}
 
           <Separator />

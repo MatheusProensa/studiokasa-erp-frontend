@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { LogIn, LogOut, ShieldAlert, Check, X, Unlock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { LogIn, LogOut, ShieldAlert, Check, X, Unlock, ClipboardList } from 'lucide-react'
 import {
   Sheet,
   SheetContent,
@@ -29,6 +30,7 @@ export function MedicaoDetailSheet({ medicao, onOpenChange }: Props) {
   const { checkIn, checkOut, toggleItem, conferirValor, aprovar, reprovar, liberarAlcada } =
     useMedicoes()
   const [valorInput, setValorInput] = useState('')
+  const navigate = useNavigate()
 
   if (!medicao) return null
   const m = medicao
@@ -193,9 +195,17 @@ export function MedicaoDetailSheet({ medicao, onOpenChange }: Props) {
           )}
 
           {m.status === 'aprovada' && m.tipo === 'final' && (
-            <div className="flex items-center gap-2 rounded-lg border border-[var(--status-success)]/40 bg-[var(--status-success-soft)] p-3 text-sm">
-              <Check className="size-4 text-[var(--status-success)]" />
-              Medição final aprovada — pedido ao fornecedor liberado (Módulo 4).
+            <div className="space-y-2 rounded-lg border border-[var(--status-success)]/40 bg-[var(--status-success-soft)] p-3 text-sm">
+              <div className="flex items-center gap-2">
+                <Check className="size-4 text-[var(--status-success)]" />
+                Medição final aprovada — pedido ao fornecedor liberado.
+              </div>
+              <Button
+                size="sm"
+                onClick={() => navigate(`/pedidos?projeto=${encodeURIComponent(m.projeto)}&cliente=${encodeURIComponent(m.cliente)}`)}
+              >
+                <ClipboardList className="size-4" /> Criar pedido ao fornecedor
+              </Button>
             </div>
           )}
         </div>

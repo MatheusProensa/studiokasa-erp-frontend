@@ -28,7 +28,7 @@ export const PROJETOS: Projeto[] = [
   {
     id: 2,
     codigo: 'PRJ-0043',
-    cliente: 'Construtora Vega',
+    cliente: 'Construtora Vega Ltda',
     ambiente: 'Home office (12 un.)',
     projetista: 'Carlos Dias',
     etapa: 'tecnico',
@@ -69,7 +69,7 @@ export const PROJETOS: Projeto[] = [
   {
     id: 4,
     codigo: 'PRJ-0045',
-    cliente: 'Ana Beatriz',
+    cliente: 'Ana Beatriz Souza',
     ambiente: 'Closet + banheiro',
     projetista: 'Rui Pena',
     etapa: 'medicao',
@@ -86,7 +86,7 @@ export const PROJETOS: Projeto[] = [
   {
     id: 5,
     codigo: 'PRJ-0046',
-    cliente: 'Studio Lume',
+    cliente: 'Studio Lume Arquitetura',
     ambiente: 'Recepção comercial',
     projetista: 'Carlos Dias',
     etapa: 'projeto',

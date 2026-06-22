@@ -23,6 +23,7 @@ interface StatCardProps {
   /** Série do mini-gráfico; se ausente, gera uma determinística pelo label. */
   trend?: number[]
   tone?: Tone
+  className?: string
 }
 
 /** Tile de KPI — número grande + variação + mini-gráfico (sparkline). */
@@ -35,13 +36,14 @@ export function StatCard({
   deltaDirection = 'up',
   trend,
   tone,
+  className,
 }: StatCardProps) {
   const down = deltaDirection === 'down'
   const resolvedTone: Tone = tone ?? (down ? 'danger' : 'primary')
   const series = trend ?? seedSeries(label, 14, !down)
 
   return (
-    <Card className="overflow-hidden">
+    <Card className={cn('overflow-hidden', className)}>
       <CardContent className="p-5 pb-0">
         <div className="flex items-start justify-between">
           <span className="text-sm font-medium text-muted-foreground">{label}</span>

@@ -6,17 +6,22 @@ import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { DataTable } from '@/components/data-table/data-table'
 import { formatDate } from '@/lib/format'
-import { COTACOES } from './mock-data'
 import { CotacaoDetailSheet } from './cotacao-detail-sheet'
 import type { Cotacao } from './types'
+import { PEDIDOS } from '@/features/pedidos/mock-data'
 
-export function CotacoesTab() {
-  const [cotacoes, setCotacoes] = useState<Cotacao[]>(COTACOES)
+export function CotacoesTab({ cotacoes, onCotacoesChange }: {
+  cotacoes: Cotacao[]
+  onCotacoesChange: (cotacoes: Cotacao[]) => void
+}) {
   const [detail, setDetail] = useState<Cotacao | null>(null)
 
   function escolher(cotacaoId: number, fornecedor: string) {
-    setCotacoes((prev) =>
-      prev.map((c) =>
+    const cotacao = cotacoes.find((c) => c.id === cotacaoId)
+    const proposta = cotacao?.propostas.find((p) => p.fornecedor === fornecedor)
+
+    onCotacoesChange(
+      cotacoes.map((c) =>
         c.id !== cotacaoId
           ? c
           : {
@@ -36,7 +41,25 @@ export function CotacoesTab() {
           }
         : d,
     )
-    toast.success(`Pedido de compra gerado para ${fornecedor}.`)
+
+    if (cotacao && proposta) {
+      const novoId = Math.max(0, ...PEDIDOS.map((p) => p.id)) + 1
+      const prazo = new Date(Date.now() + proposta.prazoDias * 86400000).toISOString().slice(0, 10)
+      PEDIDOS.unshift({
+        id: novoId,
+        codigo: `PC-${2000 + novoId}`,
+        projeto: '—',
+        ambiente: cotacao.descricao,
+        fornecedor,
+        status: 'em-producao',
+        prazoEntrega: prazo,
+        valor: proposta.valorTotal,
+        itens: cotacao.itens.map((nome) => ({ nome, qtd: 1 })),
+        divergencias: [],
+      })
+    }
+
+    toast.success(`Pedido de compra gerado para ${fornecedor} — confira em Pedido ao Fornecedor.`)
   }
 
   const columns = useMemo<ColumnDef<Cotacao>[]>(

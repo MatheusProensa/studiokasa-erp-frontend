@@ -6,10 +6,9 @@ import { NameAvatar } from '@/components/ui/name-avatar'
 import { DataTable } from '@/components/data-table/data-table'
 import { formatBRL } from '@/lib/format'
 import { STAGE_MAP, SCORE_META } from './constants'
-import { DEALS } from './mock-data'
 import type { Deal } from './types'
 
-export function OportunidadesTab() {
+export function OportunidadesTab({ deals }: { deals: Deal[] }) {
   const columns = useMemo<ColumnDef<Deal>[]>(
     () => [
       { accessorKey: 'cliente', header: 'Cliente', cell: ({ row }) => <span className="font-medium">{row.original.cliente}</span> },
@@ -58,7 +57,7 @@ export function OportunidadesTab() {
   return (
     <DataTable
       columns={columns}
-      data={DEALS}
+      data={deals}
       searchPlaceholder="Buscar oportunidade..."
       emptyMessage="Nenhuma oportunidade."
     />
